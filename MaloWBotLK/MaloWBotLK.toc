@@ -15,6 +15,7 @@ Functions.lua
 MaloWBotLK.lua
 CombatLogModule.lua
 RoleplayTables.lua
+StatCapCheck.lua
 
 classes\Deathknight\Deathknight.lua
 classes\Deathknight\DeathknightBlood.lua

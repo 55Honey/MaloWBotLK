@@ -158,6 +158,3 @@ function mb_Paladin_ImpDivineSacRequestExecutor(message, from)
     end
     return false
 end
-
-
-

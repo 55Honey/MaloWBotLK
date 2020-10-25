@@ -27,8 +27,8 @@ function mb_Mage_Arcane_OnUpdate()
         return
     end
 
-    if not UnitBuff("Arethel", "Focus Magic") then
-        if mb_CastSpellOnFriendly("Arethel", "Focus Magic") then
+    if not UnitBuff("Totemtoni", "Focus Magic") then
+        if mb_CastSpellOnFriendly("Totemtoni", "Focus Magic") then
             return
         end
     end
@@ -38,6 +38,10 @@ function mb_Mage_Arcane_OnUpdate()
     end
 
     if not mb_AcquireOffensiveTarget() then
+        return
+    end
+
+    if mb_GetMyDebuffTimeRemaining("target", "Slow") == 0 and mb_CastSpellOnTarget("Slow") then
         return
     end
 
@@ -92,9 +96,9 @@ function mb_Mage_Arcane_OnUpdate()
         end
     end
 
-    if mb_IsMoving() and mb_CastSpellOnTarget("Arcane Barrage") then
-        return
-    end
+    --if mb_IsMoving() and mb_CastSpellOnTarget("Arcane Barrage") then
+    --   return
+    --end
 
     if mb_CastSpellOnTarget("Arcane Blast") then
         return

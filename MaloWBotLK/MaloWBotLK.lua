@@ -13,7 +13,7 @@ end
 local total = 0
 local function mb_Update(self, elapsed)
 	total = total + elapsed
-	if total >= 0.1 then
+	if total >= 0.05 then
 		total = 0
 		mb_OnUpdate()
 	end
@@ -76,9 +76,9 @@ function mb_OnEvent(self, event, arg1, arg2, arg3, arg4, ...)
             if mb_followMode == "strict" then
                 return
             end
-            mb_shouldStopMovingAt = mb_time + 1.5
-            StrafeLeftStop()
-            StrafeRightStart()
+            --mb_shouldStopMovingAt = mb_time + 1.5
+            --StrafeLeftStop()
+            --StrafeRightStart()
         end
     elseif event == "UNIT_SPELLCAST_SENT" and arg1 == "player" then
         local unit = mb_GetUnitForPlayerName(arg4)
@@ -101,15 +101,17 @@ function mb_OnEvent(self, event, arg1, arg2, arg3, arg4, ...)
             mb_HandleTargetSpellcast()
         end
     elseif event == "UNIT_SPELLCAST_FAILED" then
-        if arg1 == "player" and (arg2 == "Shred" or arg2 == "Backstab") then
-            mb_lastStrafe = mb_time
-            if mb_lastStrafe + 0.5 > mb_time then
-                StrafeLeftStop()
-                StrafeRightStart()
-            else
-                StrafeLeftStop()
-                StrafeRightStop()
+        if arg1 == "player" and (arg2 == "Shred" or arg2 == "Backstab") and mb_UnitPowerPercentage("player") >= 60 then
+            if mb_lastStrafe + 2 > mb_time then
+                return
             end
+            mb_lastStrafe = mb_time
+            mb_Say("I can't hit it in the back!")
+            --    StrafeLeftStop()
+            --    StrafeRightStart()
+            --else
+            --    StrafeLeftStop()
+            --    StrafeRightStop()
         end
     elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
         if arg1 == "player" and (arg2 == "Shred" or arg2 == "Backstab") then
@@ -168,6 +170,7 @@ function mb_InitAsCommander()
 	mb_SendMessage("setCommander", UnitName("player"))
 	mb_InitShared()
 	mb_isEnabled = true
+    SetChatWindowSize(1, 12)
 end
 
 function mb_InitShared()
@@ -175,6 +178,14 @@ function mb_InitShared()
 		return
 	end
 	mb_hasInitiated = true
+
+    -- Honeys additions ------------------
+    mb_lastStrafe = 0
+    mb_forceMovement = 0
+    mb_shouldProspect = false
+    mb_shouldDisenchant = false
+    mb_lastFishingCast = 0
+    -- ------------------------------------
 
 	mb_registeredMessageHandlers = {}
 	mb_RegisterMessageHandlers()
@@ -193,6 +204,9 @@ function mb_InitShared()
 		if GetSkillLineInfo(i) == "Herbalism" then
 			mb_isHerbalist = true
 		end
+        if GetSkillLineInfo(i) == "Alchemy" then
+            mb_isAlchemist = true
+        end
 	end
 end
 
@@ -313,6 +327,24 @@ function mb_OnUpdate()
     end
     mb_CleanBlacklistedInterruptGUIDsList()
 
+    if mb_shouldProspect and mb_Prospect_auto() then
+        return
+    end
+
+    if mb_shouldDisenchant and mb_Disenchant_auto() then
+        return
+    end
+
+    if mb_AutoFishing then
+        if mb_lastFishingCast + 0.1 > mb_time then
+            return
+        end
+        InteractUnit("Fishing Bobber")
+        CastSpellByName("Fishing(Grand Master)")
+        mb_lastFishingCast = mb_time
+        return
+    end
+
     -- Clear a previously pending cast that didn't succeed and is now held in cursor
     -- Only do it when the player doesn't have a trade skill open to allow manually doing enchants etc.
     if SpellIsTargeting() and GetTradeSkillLine() == "UNKNOWN" then
@@ -322,6 +354,10 @@ function mb_OnUpdate()
     -- If we have a loot window open disable running to allow manually looting
     if GetNumLootItems() > 0 then
         return
+    end
+
+    if mb_forceMovement == 1 then
+        mb_GoToPosition_Update()
     end
 
     if mb_shouldInterruptTarget then

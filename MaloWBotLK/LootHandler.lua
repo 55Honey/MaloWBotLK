@@ -332,6 +332,3 @@ function mb_LootHandler_CanEquipItem(itemSubType, itemEquipLoc)
 
 	return true
 end
-
-
-

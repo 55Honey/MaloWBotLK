@@ -1,15 +1,15 @@
 mb_Warlock_petAttack = false
 function mb_Warlock_OnLoad()
-    if mb_GetMySpecName() == "Affliction" then
-        mb_classSpecificRunFunction = mb_Warlock_Affliction_OnUpdate
-        mb_Warlock_Affliction_OnLoad()
-    elseif mb_GetMySpecName() == "Demonology" then
-        mb_classSpecificRunFunction = mb_Warlock_Demonology_OnUpdate
-        mb_Warlock_Demonology_OnLoad()
-    else
-        mb_classSpecificRunFunction = mb_Warlock_Destruction_OnUpdate
-        mb_SpecNotSupported("Destruction Warlocks are not yet supported")
-    end
+	if mb_GetMySpecName() == "Affliction" then
+		mb_classSpecificRunFunction = mb_Warlock_Affliction_OnUpdate
+		mb_Warlock_Affliction_OnLoad()
+	elseif mb_GetMySpecName() == "Demonology" then
+		mb_classSpecificRunFunction = mb_Warlock_Demonology_OnUpdate
+		mb_Warlock_Demonology_OnLoad()
+	else
+		mb_classSpecificRunFunction = mb_Warlock_Destruction_OnUpdate
+		mb_Warlock_Destruction_OnLoad()
+	end
 
     mb_RegisterDesiredBuff(BUFF_KINGS)
     mb_RegisterDesiredBuff(BUFF_WISDOM)

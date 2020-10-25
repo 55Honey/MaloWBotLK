@@ -198,6 +198,3 @@ function mb_Shaman_Enhancement_ReadyCheck()
     end
     return ready
 end
-
-
-

@@ -30,7 +30,7 @@ end
 
 function mb_Druid_Moonkin_OnUpdate()
 
-    if mb_Druid_Innervate("Arethel") then
+    if mb_Druid_Innervate("Honeyowl") then
         return
     end
 
@@ -41,7 +41,7 @@ function mb_Druid_Moonkin_OnUpdate()
     if not mb_AcquireOffensiveTarget() then
         return
     end
-	
+
 	mb_HandleAutomaticSalvationRequesting()
 
     if mb_ShouldUseDpsCooldowns("Wrath") and UnitAffectingCombat("player") then

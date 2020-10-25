@@ -36,8 +36,6 @@ function mb_Warrior_Arms_OnUpdate()
         return
     end
 
-    mb_HandleAutomaticSalvationRequesting()
-
     if not mb_isAutoAttacking then
         InteractUnit("target")
     end
@@ -67,9 +65,18 @@ function mb_Warrior_Arms_OnUpdate()
         return
     end
 
-    if mb_GetDebuffStackCount("target", "Sunder Armor") < 5 or mb_GetDebuffTimeRemaining("target", "Sunder Armor") < 5 then
-        mb_CastSpellOnTarget("Sunder Armor")
-        return
+    if mb_GetDebuffStackCount("target", "Sunder Armor") < 5 then
+        --mb_Say("StackCount: ".. mb_GetDebuffStackCount("target", "Sunder Armor"))
+        if mb_CastSpellOnTarget("Sunder Armor") then
+            return
+        end
+    end
+
+    if mb_GetDebuffTimeRemaining("target", "Sunder Armor") < 5 then
+        --mb_Say("Time Remaining")
+        if mb_CastSpellOnTarget("Sunder Armor") then
+            return
+        end
     end
 
     if UnitBuff("player", "Sudden Death") then

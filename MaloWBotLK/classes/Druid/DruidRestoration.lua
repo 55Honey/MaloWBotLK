@@ -25,7 +25,11 @@ function mb_Druid_Restoration_OnUpdate()
         return
     end
 
-    if mb_Druid_Innervate("Khalia") then
+    if not UnitAffectingCombat("player") then
+        return false
+    end
+
+    if mb_Druid_Innervate("Khirali") then
         return
     end
 
@@ -108,7 +112,7 @@ function mb_Druid_Restoration_BlanketRaid()
 	if not UnitAffectingCombat("player") then
 		return false
 	end
-	
+
     local healUnit, missingHealth = mb_GetMostDamagedFriendly("Rejuvenation")
 
     if mb_UnitHasMyBuff(healUnit, "Rejuvenation") and missingHealth > mb_GetSpellEffect("Swiftmend") then

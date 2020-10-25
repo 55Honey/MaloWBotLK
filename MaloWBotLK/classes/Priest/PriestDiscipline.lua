@@ -154,4 +154,3 @@ function mb_Priest_Discipline_PowerInfusionRequestExecutor(message, from)
 
     return false
 end
-

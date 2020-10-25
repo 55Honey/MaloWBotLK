@@ -66,7 +66,7 @@ end
 
 -- Player speaks the message in /s
 function mb_Say(message)
-	SendChatMessage(message, "SAY", "Common")
+	SendChatMessage(message, "SAY", "Orcish")
 end
 
 function mb_CreateMacro(name, body, actionSlot)
@@ -488,6 +488,7 @@ function mb_UnitHasDebuffOfType(unit, debuffType1, debuffType2, debuffType3)
 end
 
 -- Returns true if using CDs is a good idea
+	-- Returns true if using CDs is a good idea
 function mb_ShouldUseDpsCooldowns(rangeCheckSpell)
     if mb_forceBlockDpsCooldowns then
         return false
@@ -1086,4 +1087,48 @@ function mb_GetRealSpellCrit(spellSchool, unit)
 		end
 	end
 	return crit
+end
+
+function mb_Prospect_auto()
+    local spell, rank, displayName, icon, startTime, endTime, isTradeSkill, castID, interrupt = UnitCastingInfo("player")
+    if spell == "Prospecting" then
+        return true
+    end
+    for bagID=0,11 do
+        for v=0,GetContainerNumSlots(bagID) do
+            local bagItemLink = GetContainerItemLink(bagID, v)
+            if bagItemLink ~= nil then
+                local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(bagItemLink)
+                if itemName == "Cobalt Ore" or itemName == "Saronite Ore" then
+                    print(bagItemLink .. " Prospecting: " .. itemType)
+                    CastSpellByName("Prospecting")
+                    UseContainerItem(bagID, v);
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+function mb_Disenchant_auto()
+    local spell, rank, displayName, icon, startTime, endTime, isTradeSkill, castID, interrupt = UnitCastingInfo("player")
+    if spell == "Disenchant" then
+        return true
+    end
+    for bagID=0,11 do
+        for v=0,GetContainerNumSlots(bagID) do
+            local bagItemLink = GetContainerItemLink(bagID, v)
+            if bagItemLink ~= nil then
+                local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(bagItemLink)
+                if itemRarity == 2 and (itemType == "Armor" or itemType == "Weapon") then
+                    print(bagItemLink .. " Disenchanting: " .. itemType)
+                    CastSpellByName("Disenchant")
+                    UseContainerItem(bagID, v);
+                    return true
+                end
+            end
+        end
+    end
+    return false
 end

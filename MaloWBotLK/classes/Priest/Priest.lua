@@ -1,15 +1,14 @@
 function mb_Priest_OnLoad()
-    if mb_GetMySpecName() == "Discipline" then
-        mb_classSpecificRunFunction = mb_Priest_Discipline_OnUpdate
-        mb_Priest_Discipline_OnLoad()
-    elseif mb_GetMySpecName() == "Holy" then
-        mb_classSpecificRunFunction = mb_Priest_Holy_OnUpdate
-        mb_Priest_Holy_OnLoad()
-    else
-        mb_classSpecificRunFunction = mb_Priest_Shadow_OnUpdate
-        mb_Priest_Shadow_OnLoad()
-        mb_SpecNotSupported("Shadow Priests are not yet supported")
-    end
+	if mb_GetMySpecName() == "Discipline" then
+		mb_classSpecificRunFunction = mb_Priest_Discipline_OnUpdate
+		mb_Priest_Discipline_OnLoad()
+	elseif mb_GetMySpecName() == "Holy" then
+		mb_classSpecificRunFunction = mb_Priest_Holy_OnUpdate
+		mb_Priest_Holy_OnLoad()
+	else
+		mb_classSpecificRunFunction = mb_Priest_Shadow_OnUpdate
+		mb_Priest_Shadow_OnLoad()
+	end
 
     mb_RegisterDesiredBuff(BUFF_KINGS)
     mb_RegisterDesiredBuff(BUFF_WISDOM)

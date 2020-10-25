@@ -31,6 +31,34 @@ function mb_Shaman_Restoration_OnUpdate()
         return
     end
 
+    if mb_isAlchemist == true then
+        local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId
+        = UnitAura("player", "Flask of the North")
+
+        if spellId == nil then
+            mb_UseItem("Flask of the North")
+            return
+        end
+
+        local remainingBuffTime = expirationTime - mb_time
+
+        --mb_Print("spellId: ".. spellId)
+        --mb_Print("remainingBuffTime: ".. remainingBuffTime)
+
+        if spellId ~= 67016 or remainingBuffTime < 1200 then  --67016=SP, 67017=AP, 67018=Strength
+            CancelUnitBuff("player", "Flask of the North")
+            mb_UseItem("Flask of the North")
+        end
+
+    end
+
+    if mb_isAlchemist == true and mb_UnitPowerPercentage("player") < 80 then
+        local StartTime, duration, enable = GetItemCooldown("Endless Mana Potion")
+        if duration == 0 then
+            mb_UseItem("Endless Mana Potion")
+        end
+    end
+
     local tanks = mb_GetTanks("Healing Wave")
     if tanks[1] ~= nil and not mb_UnitHasMyBuff(tanks[1], "Earth Shield") then
         if mb_CastSpellOnFriendly(tanks[1], "Earth Shield") then
@@ -66,7 +94,7 @@ function mb_Shaman_Restoration_OnUpdate()
         return
     end
 
-    if mb_UnitPowerPercentage("Kisaana") < 50 and UnitAffectingCombat("Kisaana") then
+    if mb_UnitPowerPercentage("Felide") < 50 and UnitAffectingCombat("Felide") then
         CastSpellByName("Mana Tide Totem")
         return
     end

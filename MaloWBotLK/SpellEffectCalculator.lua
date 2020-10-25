@@ -191,10 +191,3 @@ function mb_GetSpellEffect(spell)
     local spellEffect = (baseValue + coefficient * spellPower) * 1.06 * classModifier -- Count on having Improved Devotion Aura, or Tree Form on the raid
     return spellEffect
 end
-
-
-
-
-
-
-

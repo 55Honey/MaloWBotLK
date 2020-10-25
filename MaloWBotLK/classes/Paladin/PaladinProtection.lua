@@ -33,7 +33,7 @@ function mb_Paladin_Protection_OnUpdate()
         return
     end
 
-    if not UnitBuff("player", "Seal of Vengeance") and mb_CastSpellWithoutTarget("Seal of Vengeance") then
+    if not UnitBuff("player", "Seal of Corruption") and mb_CastSpellWithoutTarget("Seal of Corruption") then
         return
     end
 
@@ -83,7 +83,7 @@ function mb_Paladin_Protection_OnUpdate()
         end
     end
 
-    if mb_CastSpellOnTarget("Judgement of Light") then
+    if mb_CastSpellOnTarget("Judgement of Wisdom") then
         return
     end
 
@@ -112,8 +112,8 @@ end
 
 function mb_Paladin_Protection_ReadyCheck()
     local ready = true
-    if mb_GetBuffTimeRemaining("player", "Seal of Vengeance") < 540 then
-        CancelUnitBuff("player", "Seal of Vengeance")
+    if mb_GetBuffTimeRemaining("player", "Seal of Corruption") < 540 then
+        CancelUnitBuff("player", "Seal of Corruption")
         ready = false
     end
     return ready
@@ -141,5 +141,3 @@ function mb_Paladin_Protection_TauntExecutor(message, from)
     end
     return false
 end
-
-

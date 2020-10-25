@@ -130,4 +130,3 @@ function mb_Warlock_Demonology_OnUpdate()
 
     CastSpellByName("Shadow Bolt")
 end
-

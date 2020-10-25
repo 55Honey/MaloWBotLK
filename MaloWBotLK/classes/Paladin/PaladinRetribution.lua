@@ -143,7 +143,7 @@ function mb_Paladin_Retribution_OnUpdate()
 end
 
 function mb_Paladin_Retribution_CastSeal()
-    local spell = "Seal of Vengeance"
+    local spell = "Seal of Corruption"
     if mb_cleaveMode > 0 then
         spell = "Seal of Command"
     end
@@ -155,11 +155,10 @@ end
 
 function mb_Paladin_Retribution_ReadyCheck()
     local ready = true
-    if mb_GetBuffTimeRemaining("player", "Seal of Vengeance") < 540 and mb_GetBuffTimeRemaining("player", "Seal of Command") < 540 then
-        CancelUnitBuff("player", "Seal of Vengeance")
+    if mb_GetBuffTimeRemaining("player", "Seal of Corruption") < 540 and mb_GetBuffTimeRemaining("player", "Seal of Command") < 540 then
+        CancelUnitBuff("player", "Seal of Corruption")
         CancelUnitBuff("player", "Seal of Command")
         ready = false
     end
     return ready
 end
-

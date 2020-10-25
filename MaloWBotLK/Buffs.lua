@@ -8,4 +8,3 @@ BUFF_INTELLECT = { requestType = "buff:intellect", singleAuraName = "Arcane Inte
 BUFF_SHADOW_PROT = { requestType = "buff:shadow_prot", singleAuraName = "Shadow Protection", groupAuraName = "Prayer of Shadow Protection" }
 BUFF_MOTW = { requestType = "buff:motw", singleAuraName = "Mark of the Wild", groupAuraName = "Gift of the Wild" }
 BUFF_THORNS = { requestType = "buff:thorns", singleAuraName = "Thorns" }
-

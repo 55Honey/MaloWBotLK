@@ -204,7 +204,3 @@ function mb_Shaman_HeroismRequestExecutor(message, from)
     end
     return false
 end
-
-
-
-
