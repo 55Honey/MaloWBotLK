@@ -1,0 +1,47 @@
+mb_Print("Type \"/run CGM()\" to have macros created and placed.")
+mb_Print("Documentation: https://github.com/Malow/MaloWBotLK")
+mb_Print("Wiki: https://malowbotlk.fandom.com/wiki/MalowBotLK_Wiki")
+
+function CGM()
+	mb_CreateGeneralMacro("Single", "/mb re mb_cleaveMode=0;mb_cleaveMode=0", 2)
+	mb_CreateGeneralMacro("Cleave", "/mb re mb_cleaveMode=1;mb_cleaveMode=1", 3)
+	mb_CreateGeneralMacro("AoE", "/mb re mb_cleaveMode=2;mb_cleaveMode=2", 4)
+	mb_CreateGeneralMacro("Stop DPS", "/mb re mb_SetCommanderHandler(\"Nil\", \"XXX\")", 5)
+	mb_CreateGeneralMacro("Jump", "/mb re JumpOrAscendStart()", 6)
+	mb_CreateGeneralMacro("None", "/mb re mb_followMode=\"none\"; mb_BreakFollow(); mb_StopMoving()", 7)
+	mb_CreateGeneralMacro("Lenient", "/mb re mb_followMode=\"lenient\"", 8)
+	mb_CreateGeneralMacro("Strict", "/mb re mb_followMode=\"strict\"", 9)
+	mb_CreateGeneralMacro("Bloodlust", "/run mb_SendExclusiveRequest(\"heroism\")", 10)
+	mb_CreateGeneralMacro("IwT", "/mb re InteractUnit(\"target\")", 11)
+	mb_CreateGeneralMacro("Focus", "/mb re FocusUnit(mb_GetUnitForPlayerName(\"Malowtank\") .. \"target\");/focus", 12)
+	mb_CreateGeneralMacro("CDs", "/run local c=mb_forceBlockDpsCooldowns;if c then c=false; mb_Print(\"DPS CDs free\");else c=true; mb_Print(\"DPS CDs blocked\");end mb_forceBlockDpsCooldowns=c; mb_SendMessage(\"remoteExecute \", \"mb_forceBlockDpsCooldowns=\"..tostring(c));", 61)
+	mb_CreateGeneralMacro("Init", "/mb InitAsCommander", 62)
+	mb_CreateGeneralMacro("Auto", "/run if mb_doAutoRotationAsCommander then mb_doAutoRotationAsCommander = false; mb_Print(\"Off\"); else mb_doAutoRotationAsCommander = true; mb_Print(\"On\"); end", 63)
+	mb_CreateGeneralMacro("Accept", "/run mb_SendMessage(\"accept\")", 64)
+	mb_CreateGeneralMacro("Move", "/run mb_SendMessage(\"moveForward\")", 65)
+	mb_CreateGeneralMacro("Release", "/mb re RepopMe()", 66)
+	mb_CreateGeneralMacro("Taunt", "/run mb_SendExclusiveRequest(\"taunt\")", 67)
+	mb_CreateGeneralMacro("Release", "/run mb_SendExclusiveRequest(\"healcd\")", 68)
+	mb_CreateGeneralMacro("Invite", "/run mb_fixRaidSetupName = \"10man\"", 71)
+	mb_CreateGeneralMacro("Invite", "/run mb_fixRaidSetupName = \"25man\"", 72)
+	
+	mb_Print("--------------------------------------------------")
+	mb_Print("Change XXX in \"Stop DPS\" macro to your leaders name!")
+	mb_Print("\"mb_config.raidLayout[\"25man\"]\" names must be set in Config.lua for invite macro to work.")
+	mb_Print("--------------------------------------------------")
+	mb_Print("Documentation: https://github.com/Malow/MaloWBotLK")
+	mb_Print("Activate Bottom Left Action Bar. (ESC, Interface, ActionBars)")
+	mb_Print("--------------------------------------------------")
+end
+
+function mb_CreateGeneralMacro(name, body, actionSlot)
+    local macroId = GetMacroIndexByName(name)
+    if macroId > 0 then
+        EditMacro(macroId, name, 12, body, nil, 1)
+    else
+        macroId = CreateMacro(name, 12, body, nil, 1)
+    end
+    PickupMacro(macroId)
+    PlaceAction(actionSlot)
+    ClearCursor()
+end

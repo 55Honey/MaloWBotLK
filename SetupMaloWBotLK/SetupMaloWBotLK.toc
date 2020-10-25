@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: SetupMaloWBotLK
+## DefaultState: enabled
+## Notes: SetupMaloWBotLK
+## Version 1
+## Author: Honey
+## Dependencies: MaloWBotLK
+
+SetupMalowBotLK.lua
