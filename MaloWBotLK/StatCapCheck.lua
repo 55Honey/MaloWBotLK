@@ -1,5 +1,6 @@
+-- mb_FindMissingEnchants   Makes all toons check for missing enchants (enchanters also on rings)
 -- mb_FindMissingGems()     Makes all toons check for missing gems and missing prismatic sockets (blacksmiths also on gloves and bracers)
--- mb_PrintFailedCaps()     Makes all toons print caps which are TOO LOW or EXCEEDING the cap by 8 or more
+-- mb_PrintFailedCaps()     Makes all toons print caps (hit/def) which are TOO LOW or EXCEEDING the cap by 8 or more
 -- mb_PrintHitCaps()        Makes all toons print only HIT caps.
 -- mb_PrintAllCaps()        makes all toons print ALL caps.
 
@@ -350,4 +351,3 @@ function mb_FindMissingEnchants()
         end
     end
 end
--- EXCLUDE OFFHAND, RELIC FROM CHECKS
