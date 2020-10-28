@@ -1,9 +1,7 @@
 # MaloWBotLK
 3.3.5 version of MaloWBot, specifically designed for the 'Wrath of the Multiboxer' private server: https://discord.gg/wwKfnKR
 
-Currently only supports: Retribution Paladins, Enhancement Shamans, Arms Warriors, Holy Paladins, Protection Paladins and Combat Rogues. You can find more supported classes over on Devon's fork: https://github.com/ChrisCGalbraith/MaloWBotLK   
-
-If you have just a little coding experience then adding more classes and specs is easy by modifying the files in the /classes/ folder.
+Wiki: https://malowbotlk.fandom.com/wiki/MalowBotLK_Wiki
 
 This addon requires Lua-unlocking to work, as it automates rotations and stuff. You can find a Lua-unlocker that I've coded in the above Discord Server in the #faq room.
 
@@ -39,6 +37,21 @@ Loads a boss-module which will override certain behaviour depending on the boss:
 Switch to the other dual-spec on a character, and equip an equipment-set corresponding to the new spec's name if it exists, and perform a soft-reload to load the new spec's class-functions:  
 /mb respec  
 Command is run on the character you want to respec, can also be remote-executed through "mb_isRespecing = true".  
+
+Print all caps in chat:
+/mb caps
+
+Print hit caps in chat:
+/mb hit
+
+Print failed caps in chat:
+/mb fail
+
+Print missing gems in chat:
+/mb gem
+
+Print missing enchants in chat:
+/mb ench
 
 # Some useful macros I use on my Commander:
 Make all slaves accept pending trades or guild invites:  
