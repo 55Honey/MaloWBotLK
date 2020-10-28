@@ -550,6 +550,36 @@ function mb_HandleCommand(msg)
         return true
     end
 
+    matches, remainingString = mb_StringStartsWith(msg, "caps")
+    if matches then
+        mb_PrintAllCaps()
+        return true
+    end
+
+    matches, remainingString = mb_StringStartsWith(msg, "hit")
+    if matches then
+        mb_PrintHitCaps()
+        return true
+    end
+
+    matches, remainingString = mb_StringStartsWith(msg, "fail")
+    if matches then
+        mb_PrintFailedCaps()
+        return true
+    end
+
+    matches, remainingString = mb_StringStartsWith(msg, "gem")
+    if matches then
+        mb_FindMissingGems()
+        return true
+    end
+
+    matches, remainingString = mb_StringStartsWith(msg, "ench")
+    if matches then
+        mb_FindMissingEnchants()
+        return true
+    end
+
     return false
 end
 
