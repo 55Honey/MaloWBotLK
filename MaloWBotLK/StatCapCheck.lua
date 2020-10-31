@@ -333,7 +333,7 @@ function mb_FindMissingEnchants()
                 isCraftingReagent = GetItemInfo(itemString)
                 --print(j)
                 --print(enchantId)
-                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols" and itemSubType ~= "Miscellaneous" and itemSubType ~= "Wands" then
+                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols" and itemSubType ~= "Miscellaneous" and itemSubType ~= "Wands" and itemSubType ~= "Sigils" then
                     --print(itemSubType)
                     if j ~= 11 and j ~= 12 then
                         --print("debug2")
