@@ -261,13 +261,14 @@ function mb_FindMissingGems()
     mb_PrismaticFoundHands = 0
     mb_GemMissing = 0
 
-    local mb_SlotStats
+    local mb_GemInSlot
     for j = 1, 17 do
         SocketInventoryItem(j)
         local SocketCount = GetNumSockets()
         if SocketCount > 0 then
             for i = 1, SocketCount do
-                _,_,mb_SlotStats = GetExistingSocketInfo(i)
+                mb_GemInSlot = nil
+                mb_GemInSlot,_,_ = GetExistingSocketInfo(i)
                 if j == 6 then
                     if GetSocketTypes(i) == "Socket" then mb_PrismaticFoundWaist = 1 end
                 end
@@ -279,7 +280,7 @@ function mb_FindMissingGems()
                         if GetSocketTypes(i) == "Socket" then mb_PrismaticFoundHands = 1 end
                     end
                 end
-                if mb_SlotStats ~= 1 then
+                if mb_GemInSlot == nil then
                     mb_Print("Gem missing at J: ".. j.. "  i: ".. i)
                     mb_GemMissing = mb_GemMissing + 1
                 end
@@ -332,8 +333,8 @@ function mb_FindMissingEnchants()
                 isCraftingReagent = GetItemInfo(itemString)
                 --print(j)
                 --print(enchantId)
-                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols" and itemSubType ~= "Miscellaneous" then
-                    --print("debug1")
+                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols" and itemSubType ~= "Miscellaneous" and itemSubType ~= "Wands" then
+                    --print(itemSubType)
                     if j ~= 11 and j ~= 12 then
                         --print("debug2")
                         --print(itemType)
