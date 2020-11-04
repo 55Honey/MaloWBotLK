@@ -67,9 +67,11 @@ function mb_Shaman_Restoration_OnUpdate()
         return
     end
 
-    if mb_UnitPowerPercentage(mb_config.InnervateTarget) < 50 and UnitAffectingCombat(mb_config.InnervateTarget) then
-        CastSpellByName("Mana Tide Totem")
-        return
+    for _, name in pairs(mb_config.InnervateTargets) do
+        if mb_UnitPowerPercentage(name) < 50 and UnitAffectingCombat(name) then
+            CastSpellByName("Mana Tide Totem")
+            return
+        end
     end
 
     if tanks[1] ~= nil and mb_GetMissingHealth(tanks[1]) > mb_GetSpellEffect("Lesser Healing Wave") then
