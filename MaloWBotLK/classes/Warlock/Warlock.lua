@@ -1,5 +1,6 @@
 mb_Warlock_petAttack = false
 function mb_Warlock_OnLoad()
+    mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
 	if mb_GetMySpecName() == "Affliction" then
 		mb_classSpecificRunFunction = mb_Warlock_Affliction_OnUpdate
 		mb_Warlock_Affliction_OnLoad()

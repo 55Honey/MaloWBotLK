@@ -8,6 +8,8 @@ function mb_Deathknight_OnLoad()
 
     mb_RegisterInterruptSpell("Mind Freeze")
 
+    mb_desiredFlaskEffect = 67018 --67016=SP, 67017=AP, 67018=Strength
+
     if mb_GetMySpecName() == "Blood" then
         mb_classSpecificRunFunction = mb_Deathknight_Blood_OnUpdate
         mb_Deathknight_Blood_OnLoad()

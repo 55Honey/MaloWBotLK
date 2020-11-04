@@ -1,4 +1,7 @@
 function mb_Warrior_OnLoad()
+
+	mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
+
 	mb_RegisterDesiredBuff(BUFF_KINGS)
 	mb_RegisterDesiredBuff(BUFF_MIGHT)
 	mb_RegisterDesiredBuff(BUFF_SANCTUARY)

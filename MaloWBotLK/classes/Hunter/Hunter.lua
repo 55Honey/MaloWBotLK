@@ -1,5 +1,6 @@
 function mb_Hunter_OnLoad()
     local mb_Hunterweapon = false
+    mb_desiredFlaskEffect = 67017 --67016=SP, 67017=AP, 67018=Strength
     if IsEquippedItemType("Bow") then
         mb_Hunterweapon = true
         if mb_CheckAmmoAmount("Terrorshaft Arrow", 2000) == false then

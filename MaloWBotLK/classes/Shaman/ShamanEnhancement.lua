@@ -8,6 +8,7 @@
 mb_Shaman_Enhancement_saveProcsForHeals = false
 
 function mb_Shaman_Enhancement_OnLoad()
+    mb_desiredFlaskEffect = 67017 --67016=SP, 67017=AP, 67018=Strength
     local _, _, _, _, improvedStrengthOfEarth = GetTalentInfo(2, 1)
     if improvedStrengthOfEarth > 0 then
         mb_Shaman_SetEarthTotem("Strength of Earth Totem")

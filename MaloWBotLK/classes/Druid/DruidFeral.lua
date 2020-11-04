@@ -2,6 +2,7 @@ function mb_Druid_Feral_OnLoad()
     mb_RegisterDesiredBuff(BUFF_THORNS)
     mb_RegisterClassSpecificReadyCheckFunction(mb_Druid_ReadyCheck)
     mb_RegisterExclusiveRequestHandler("taunt", mb_Druid_Feral_TauntAcceptor, mb_Druid_Feral_TauntExecutor)
+    mb_desiredFlaskEffect = 67017 --67016=SP, 67017=AP, 67018=Strength
 end
 
 function mb_Druid_Feral_OnUpdate()

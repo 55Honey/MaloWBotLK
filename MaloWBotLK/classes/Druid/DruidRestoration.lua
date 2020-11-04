@@ -4,6 +4,7 @@
 function mb_Druid_Restoration_OnLoad()
     mb_RegisterClassSpecificReadyCheckFunction(mb_Druid_ReadyCheck)
     mb_RegisterExclusiveRequestHandler("cr", mb_Druid_CombatRessRequestAcceptor, mb_Druid_CombatRessRequestExecutor)
+    mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
 end
 
 function mb_Druid_Restoration_OnUpdate()

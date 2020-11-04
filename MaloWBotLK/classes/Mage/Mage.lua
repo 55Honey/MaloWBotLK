@@ -1,4 +1,5 @@
 function mb_Mage_OnLoad()
+    mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
     if mb_GetMySpecName() == "Arcane" then
         mb_classSpecificRunFunction = mb_Mage_Arcane_OnUpdate
         mb_Mage_Arcane_OnLoad()

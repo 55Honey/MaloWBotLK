@@ -10,6 +10,7 @@
 mb_Paladin_Retribution_saveProcsForHeals = false
 
 function mb_Paladin_Retribution_OnLoad()
+    mb_desiredFlaskEffect = 67018 --67016=SP, 67017=AP, 67018=Strength
     mb_EnableIWTDistanceClosing("Crusader Strike")
     mb_RegisterDesiredBuff(BUFF_MIGHT)
     mb_RegisterClassSpecificReadyCheckFunction(mb_Paladin_Retribution_ReadyCheck)

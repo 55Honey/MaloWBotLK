@@ -1,4 +1,5 @@
 function mb_Shaman_Elemental_OnLoad()
+	mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
 	mb_Shaman_SetEarthTotem("Tremor Totem")
 	mb_Shaman_SetFireTotem("Totem of Wrath")
 	mb_Shaman_SetWaterTotem("Healing Stream Totem")

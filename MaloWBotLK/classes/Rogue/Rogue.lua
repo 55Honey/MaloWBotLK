@@ -1,4 +1,5 @@
 function mb_Rogue_OnLoad()
+    mb_desiredFlaskEffect = 67017 --67016=SP, 67017=AP, 67018=Strength
     mb_RegisterDesiredBuff(BUFF_KINGS)
     mb_RegisterDesiredBuff(BUFF_SANCTUARY)
     mb_RegisterDesiredBuff(BUFF_FORT)

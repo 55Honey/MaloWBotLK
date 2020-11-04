@@ -5,6 +5,7 @@
 -- If low on mana, and if next auto-hit on target is less than like 0.3 seconds away, delay healing until after auto-hit to proc Seal of Wisdom and Judgement of Wisdom
 
 function mb_Paladin_Holy_OnLoad()
+    mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
     mb_preCastFinishCallback = mb_Paladin_Holy_PreCastFinishCallback
     mb_RegisterExclusiveRequestHandler("healcd", mb_Paladin_Holy_HealCdAcceptor, mb_Paladin_Holy_HealCdExecutor)
     mb_CheckReagentAmount("Runic Mana Potion", 20)

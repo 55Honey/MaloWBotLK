@@ -1,4 +1,5 @@
 function mb_Priest_OnLoad()
+    mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
 	if mb_GetMySpecName() == "Discipline" then
 		mb_classSpecificRunFunction = mb_Priest_Discipline_OnUpdate
 		mb_Priest_Discipline_OnLoad()

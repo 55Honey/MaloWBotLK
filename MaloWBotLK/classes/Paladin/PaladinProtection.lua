@@ -6,6 +6,7 @@
 -- Auto-taunt off non-tanks
 
 function mb_Paladin_Protection_OnLoad()
+    mb_desiredFlaskEffect = 67018 --67016=SP, 67017=AP, 67018=Strength
     mb_RegisterDesiredBuff(BUFF_MIGHT)
     mb_RegisterDesiredBuff(BUFF_THORNS)
     mb_RegisterClassSpecificReadyCheckFunction(mb_Paladin_Protection_ReadyCheck)

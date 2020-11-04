@@ -356,6 +356,8 @@ function mb_OnUpdate()
         return
     end
 
+    mb_DoAlchemistStuff()
+
     if mb_forceMovement == 1 then
         mb_GoToPosition_Update()
     end
