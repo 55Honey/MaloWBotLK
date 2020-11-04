@@ -67,8 +67,13 @@ function mb_Shaman_Restoration_OnUpdate()
         return
     end
 
-    for _, name in pairs(mb_config.InnervateTargets) do
-        if mb_UnitPowerPercentage(name) < 50 and UnitAffectingCombat(name) then
+    if mb_UnitPowerPercentage("player") < 50 and UnitAffectingCombat("player") then
+        CastSpellByName("Mana Tide Totem")
+            return
+    end
+
+    for mb_PartyMember=1,4 do
+        if mb_UnitPowerPercentage("party".. mb_PartyMember) < 50 and UnitAffectingCombat("party".. mb_PartyMember) then
             CastSpellByName("Mana Tide Totem")
             return
         end
