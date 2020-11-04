@@ -99,6 +99,18 @@ function mb_Druid_Restoration_OnUpdate()
         end
     end
 
+    if tanks[3] ~= nil and not mb_UnitHasMyBuff(tanks[3], "Lifebloom") then
+        if mb_CastSpellOnFriendly(tanks[3], "Lifebloom") then
+            return
+        end
+    end
+
+    if tanks[4] ~= nil and not mb_UnitHasMyBuff(tanks[4], "Lifebloom") then
+        if mb_CastSpellOnFriendly(tanks[4], "Lifebloom") then
+            return
+        end
+    end
+
     if mb_CleanseRaid("Remove Curse", "Curse") then
         return
     end

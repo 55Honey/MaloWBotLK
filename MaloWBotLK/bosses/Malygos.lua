@@ -1,3 +1,4 @@
+
 function mb_BossModule_Malygos_PreOnUpdate()
     if not UnitInVehicle("player") then
         return false
@@ -13,12 +14,12 @@ function mb_BossModule_Malygos_PreOnUpdate()
         return true
     end
 
-    if GetComboPoints("playerpet", "target") == 0 and mb_GetBuffTimeRemaining("playerpet", "Revivify") < 3 then
-        CastSpellByName("Revivify", "playerpet")
-        return true
-    end
     if GetComboPoints("playerpet", "target") > 1 then
         CastSpellByName("Engulf in Flames")
+        return true
+    end
+    if mb_GetBuffTimeRemaining("playerpet", "Revivify") < 2 then
+        CastSpellByName("Revivify", "playerpet")
         return true
     end
     CastSpellByName("Flame Spike")

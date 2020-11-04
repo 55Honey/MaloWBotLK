@@ -80,14 +80,14 @@ function mb_Shaman_Enhancement_OnUpdate()
 
     mb_HandleAutomaticSalvationRequesting()
 
-    if mb_GetRemainingSpellCooldown("Gift of the Naaru") == 0 then
-        if math.random(20) == 1 then -- Stagger them a bit, otherwise they will all cast at the same time
-            local tanks = mb_GetTanks("Gift of the Naaru")
-            if tanks[1] ~= nil and mb_GetBuffTimeRemaining(tanks[1], "Gift of the Naaru") == 0 then
-                mb_CastSpellOnFriendly(tanks[1], "Gift of the Naaru")
-            end
-        end
-    end
+    --if mb_GetRemainingSpellCooldown("Gift of the Naaru") == 0 then
+    --    if math.random(20) == 1 then -- Stagger them a bit, otherwise they will all cast at the same time
+    --        local tanks = mb_GetTanks("Gift of the Naaru")
+    --        if tanks[1] ~= nil and mb_GetBuffTimeRemaining(tanks[1], "Gift of the Naaru") == 0 then
+    --            mb_CastSpellOnFriendly(tanks[1], "Gift of the Naaru")
+    --        end
+    --    end
+    --end
 
     if UnitExists("playerpet") then
         PetAttack()

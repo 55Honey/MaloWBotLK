@@ -66,7 +66,12 @@ end
 
 -- Player speaks the message in /s
 function mb_Say(message)
-	SendChatMessage(message, "SAY", "Orcish")
+    local myRace = UnitRace("player")
+    if  myRace == "Human" or myRace == "Dwarf" or myRace == "Night Elf" or myRace == "Gnome" or myRace == "Draenei" then
+        SendChatMessage(message, "SAY", "Common")
+    else
+        SendChatMessage(message, "SAY", "Orcish")
+    end
 end
 
 function mb_CreateMacro(name, body, actionSlot)
@@ -665,7 +670,7 @@ function mb_ShouldBuff()
             if not mb_IsUnitValidFriendlyTarget(unit) or not CheckInteractDistance(unit, 4) then
                 return false
             end
-            if mb_GetClass(unit) == "WARLOCK" or mb_GetClass(unit) == "HUNTER" then
+            if mb_GetClass(unit) == "WARLOCK" or mb_GetClass(unit) == "HUNTER" or mb_GetMySpecName(unit) == "Unholy" then
                 if not UnitExists(unit .. "pet") then
                     return false
                 end

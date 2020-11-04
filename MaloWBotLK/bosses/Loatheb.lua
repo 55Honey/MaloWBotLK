@@ -1,3 +1,4 @@
+
 function mb_BossModule_Loatheb_GetMissingHealth_Override(unit)
     if mb_GetDebuffTimeRemaining(unit, "Necrotic Aura") > 0 then
         return 0

@@ -1,18 +1,18 @@
 function mb_BossModule_Kelthuzad_PreOnUpdate()
     if UnitIsDeadOrGhost("player") then
-        return false
+        return
     end
     if mb_commanderUnit == nil and UnitName("target") ~= "Kel'Thuzad" then
-        return false
+        return
     end
     if mb_commanderUnit ~= nil and UnitName(mb_commanderUnit .. "target") ~= "Kel'Thuzad" then
-        return false
+        return
     end
     if mb_BossModule_Kelthuzad_ManaDetonation() then
-        return false
+        return
     end
     mb_BossModule_Kelthuzad_VoidZone()
-    mb_BossModule_Kelthuzad_DoRangeCheckAndMindControlCC()
+    mb_BossModule_Kelthuzad_DoRangeCheck()
     return false
 end
  
@@ -27,28 +27,30 @@ function mb_BossModule_Kelthuzad_ManaDetonation()
             mb_SayRaid("Detonate Mana on me!")
         end
         local x, y = mb_BossModule_Kelthuzad_GetClosestSafeManaDetonationSpot()
-        mb_GoToPosition_SetDestination(x, y, 0.003)
-        if mb_GoToPosition_Update() then
+        if mb_GoToPosition_Update(x, y, 0.003) then
+            return
+        else
             mb_GoToPosition_Reset()
         end
-        return true
-    elseif mb_BossModule_Kelthuzad_positionPreManaDetonation ~= nil then
-        mb_GoToPosition_SetDestination(mb_BossModule_Kelthuzad_positionPreManaDetonation.x, mb_BossModule_Kelthuzad_positionPreManaDetonation.y, 0.003)
-        if mb_GoToPosition_Update() then
-            mb_BossModule_Kelthuzad_positionPreManaDetonation = nil
+    else
+        if mb_BossModule_Kelthuzad_positionPreManaDetonation == nil then
             mb_GoToPosition_Reset()
+        else
+            if not mb_GoToPosition_Update(mb_BossModule_Kelthuzad_positionPreManaDetonation.x, mb_BossModule_Kelthuzad_positionPreManaDetonation.y, 0.003) then
+                mb_BossModule_Kelthuzad_positionPreManaDetonation = nil
+                mb_GoToPosition_Reset()
+            end
         end
     end
-    return false
 end
  
 mb_BossModule_Kelthuzad_safeManaDetonationSpots = {
-    { x = 0.31086, y = 0.17621 }, -- NW
-    { x = 0.30254, y = 0.24763 }, -- W
-    { x = 0.32986, y = 0.31212 }, -- SW
-    { x = 0.37876, y = 0.32598 }, -- SE
-    { x = 0.42104, y = 0.28386 }, -- E
-    { x = 0.43086, y = 0.21019 }, -- NE
+    {x = 0.31086, y = 0.17621}, -- NW
+    {x = 0.30254, y = 0.24763}, -- W
+    {x = 0.32986, y = 0.31212}, -- SW
+    {x = 0.37876, y = 0.32598}, -- SE
+    {x = 0.42104, y = 0.28386}, -- E
+    {x = 0.43086, y = 0.21019}, -- NE
 }
 function mb_BossModule_Kelthuzad_GetClosestSafeManaDetonationSpot()
     local curX, curY = mb_GetMapPosition("player")
@@ -74,28 +76,32 @@ mb_BossModule_Kelthuzad_isMovingFromVoidZone = false
 function mb_BossModule_Kelthuzad_VoidZone()
     local timeSinceVoidZone = mb_time - mb_BossModule_Kelthuzad_lastDetectedVoidZone
     if timeSinceVoidZone < 3 then
-        mb_DisableAutomaticMovement()
-        mb_BossModule_Kelthuzad_isMovingFromVoidZone = true
         return
     end
     if timeSinceVoidZone < 5 then
+        StrafeRightStop()
         StrafeLeftStart()
+        mb_disableAutomaticMovement = true
+        mb_BossModule_Kelthuzad_isMovingFromVoidZone = true
         return
     end
     if timeSinceVoidZone < 7 then
         StrafeLeftStop()
         StrafeRightStart()
+        mb_disableAutomaticMovement = true
+        mb_BossModule_Kelthuzad_isMovingFromVoidZone = true
         return
     end
     if mb_BossModule_Kelthuzad_isMovingFromVoidZone then
-        mb_StopMoving()
-        mb_EnableAutomaticMovement()
+        StrafeLeftStop()
+        StrafeRightStop()
+        mb_disableAutomaticMovement = false
         mb_BossModule_Kelthuzad_isMovingFromVoidZone = false
     end
 end
  
 mb_BossModule_Kelthuzad_lastRangeCheck = 0
-function mb_BossModule_Kelthuzad_DoRangeCheckAndMindControlCC()
+function mb_BossModule_Kelthuzad_DoRangeCheck()
     if mb_BossModule_Kelthuzad_lastRangeCheck + 1 > mb_time then
         return
     end

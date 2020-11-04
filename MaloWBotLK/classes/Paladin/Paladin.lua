@@ -43,6 +43,14 @@ function mb_Paladin_OnLoad()
             mb_RegisterExclusiveRequestHandler("impdivinesac", mb_Paladin_ImpDivineSacRequestAcceptor, mb_Paladin_ImpDivineSacRequestExecutor)
         end
     end
+
+    local myRace = UnitRace("player")
+    if  myRace == "Human" or myRace == "Dwarf" or myRace == "Night Elf" or myRace == "Gnome" or myRace == "Draenei" then
+        mb_MySeal = "Seal of Vengeance"
+    else
+        mb_MySeal = "Seal of Corruption"
+    end
+
 end
 
 function mb_Paladin_MightHandler(msg, from)

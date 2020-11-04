@@ -1,6 +1,6 @@
 mb_config ={}
 
-mb_config.tanks = {"Fahrif", "Naina", "Honey"}
+mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"}
 mb_config.mainTank = "Fahrif"
 mb_config.offTank = "Naina"
 
@@ -35,12 +35,12 @@ table.insert(mb_config.trustedCharacters, "Zakki")
 table.insert(mb_config.trustedCharacters, "Terpentin")
 
 function mb_IsTrustedCharacter(charName)
-	for _, name in pairs(mb_config.trustedCharacters) do
-		if name == charName then
-			return true
-		end
-	end
-	return false
+    for _, name in pairs(mb_config.trustedCharacters) do
+        if name == charName then
+            return true
+        end
+    end
+    return false
 end
 
 
@@ -71,7 +71,7 @@ mb_config.blacklistedInterruptSpells["Sartharion"] = { "Flame Breath" }
 
 
 -- -----------------------------------------------
--- Raid Layout
+-- Raid Layout for invite macros
 -- -----------------------------------------------
 mb_config.raidLayout = {}
 mb_config.raidLayout["40man"] = {}
@@ -124,8 +124,6 @@ table.insert(mb_config.raidLayout["40man"][8], "Dardan")
 table.insert(mb_config.raidLayout["40man"][8], "Alon")
 table.insert(mb_config.raidLayout["40man"][8], "Kyra")
 
-
-
 mb_config.raidLayout["25man"] = {}
 mb_config.raidLayout["25man"][1] = {}
 table.insert(mb_config.raidLayout["25man"][1], "Fahrif")
@@ -175,7 +173,7 @@ table.insert(mb_config.raidLayout["10man"][2], "Felide")
 
 
 -- -----------------------------------------------
--- Stat Weights
+-- Stat Weights for lootcouncil with /mb lc
 -- -----------------------------------------------
 mb_config.statWeights = {}
 -- Paladin
@@ -362,30 +360,30 @@ mb_config.statWeights["Warrior"]["Arms"].dps = 0.0
 mb_config.statWeights["Warrior"]["Arms"].socketMeta = 100
 mb_config.statWeights["Warrior"]["Arms"].socketColored = 16
 -- Prot
-mb_config.statWeights["Warrior"]["Protection"] = {}
-mb_config.statWeights["Warrior"]["Protection"].agility = 0.67
-mb_config.statWeights["Warrior"]["Protection"].intellect = 0.0
-mb_config.statWeights["Warrior"]["Protection"].spirit = 0.0
-mb_config.statWeights["Warrior"]["Protection"].strength = 0.48
-mb_config.statWeights["Warrior"]["Protection"].stamina = 1.0
-mb_config.statWeights["Warrior"]["Protection"].critRating = 0.07
-mb_config.statWeights["Warrior"]["Protection"].resilienceRating = 0.0
-mb_config.statWeights["Warrior"]["Protection"].defenseRating = 0.86
-mb_config.statWeights["Warrior"]["Protection"].expertiseRating = 0.19
-mb_config.statWeights["Warrior"]["Protection"].dodgeRating = 0.9
-mb_config.statWeights["Warrior"]["Protection"].parryRating = 0.67
-mb_config.statWeights["Warrior"]["Protection"].blockRating = 0.48
-mb_config.statWeights["Warrior"]["Protection"].armorPenetrationRating = 0.1
-mb_config.statWeights["Warrior"]["Protection"].hitRating = 0.1
-mb_config.statWeights["Warrior"]["Protection"].hasteRating = 0.01
-mb_config.statWeights["Warrior"]["Protection"].attackPower = 0.01
-mb_config.statWeights["Warrior"]["Protection"].armor = 0.06
-mb_config.statWeights["Warrior"]["Protection"].blockValue = 0.81
-mb_config.statWeights["Warrior"]["Protection"].spellPower = 0.0
-mb_config.statWeights["Warrior"]["Protection"].mp5 = 0.0
-mb_config.statWeights["Warrior"]["Protection"].dps = 0.0
-mb_config.statWeights["Warrior"]["Protection"].socketMeta = 100
-mb_config.statWeights["Warrior"]["Protection"].socketColored = 16
+mb_config.statWeights["Warrior"]["Prot"] = {}
+mb_config.statWeights["Warrior"]["Prot"].agility = 0.67
+mb_config.statWeights["Warrior"]["Prot"].intellect = 0.0
+mb_config.statWeights["Warrior"]["Prot"].spirit = 0.0
+mb_config.statWeights["Warrior"]["Prot"].strength = 0.48
+mb_config.statWeights["Warrior"]["Prot"].stamina = 1.0
+mb_config.statWeights["Warrior"]["Prot"].critRating = 0.07
+mb_config.statWeights["Warrior"]["Prot"].resilienceRating = 0.0
+mb_config.statWeights["Warrior"]["Prot"].defenseRating = 0.86
+mb_config.statWeights["Warrior"]["Prot"].expertiseRating = 0.19
+mb_config.statWeights["Warrior"]["Prot"].dodgeRating = 0.9
+mb_config.statWeights["Warrior"]["Prot"].parryRating = 0.67
+mb_config.statWeights["Warrior"]["Prot"].blockRating = 0.48
+mb_config.statWeights["Warrior"]["Prot"].armorPenetrationRating = 0.1
+mb_config.statWeights["Warrior"]["Prot"].hitRating = 0.1
+mb_config.statWeights["Warrior"]["Prot"].hasteRating = 0.01
+mb_config.statWeights["Warrior"]["Prot"].attackPower = 0.01
+mb_config.statWeights["Warrior"]["Prot"].armor = 0.06
+mb_config.statWeights["Warrior"]["Prot"].blockValue = 0.81
+mb_config.statWeights["Warrior"]["Prot"].spellPower = 0.0
+mb_config.statWeights["Warrior"]["Prot"].mp5 = 0.0
+mb_config.statWeights["Warrior"]["Prot"].dps = 0.0
+mb_config.statWeights["Warrior"]["Prot"].socketMeta = 100
+mb_config.statWeights["Warrior"]["Prot"].socketColored = 16
 
 
 -- Druid

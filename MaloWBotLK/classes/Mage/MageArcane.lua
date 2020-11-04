@@ -33,6 +33,12 @@ function mb_Mage_Arcane_OnUpdate()
         end
     end
 
+    if not UnitBuff("Honeyowl", "Focus Magic") then
+        if mb_CastSpellOnFriendly("Honeyowl", "Focus Magic") then
+            return
+        end
+    end
+
     if mb_CleanseRaid("Remove Curse", "Curse") then
         return
     end

@@ -17,10 +17,14 @@ function mb_BossModule_Thaddius_PreOnUpdate()
         slowFallSpell = "Levitate"
     end
     if slowFallSpell ~= nil then
-        if mb_commanderUnit == nil then
+        if mb_commanderUnit == nil and mb_doAutoRotationAsCommander == false then
             return false
         end
-        local unit = mb_commanderUnit .. "target"
+        if mb_commanderUnit == nil and mb_doAutoRotationAsCommander == true then
+            local unit = "target"
+        else
+            local unit = mb_commanderUnit .. "target"
+        end
         if not UnitExists(unit) or (UnitName(unit) ~= "Thaddius" and mb_UnitHealthPercentage(unit) < 30) then
             return mb_BossModule_Thaddius_BlanketRaidSlowFall(slowFallSpell)
         end

@@ -72,14 +72,16 @@ function mb_CheckStatCaps()
         myHitCapHard = 289
     elseif mb_mySpec == "Enhancement" then
         myHitCapSoft = 263
-    elseif mb_myClass == "MAGE" then
+    elseif mb_myClass == "MAGE" and mb_mySpec == "Fire" then
         myHitCapHard = 368
+    elseif mb_myClass == "MAGE" and mb_mySpec == "Arcane" then
+        myHitCapHard = 289
     elseif mb_mySpec == "Affliction" then
         myHitCapHard = 289
     elseif mb_mySpec == "Demonology" then
-        myHitCapHard = 367
+        myHitCapHard = 368
     elseif mb_mySpec == "Destruction" then
-        myHitCapHard = 367
+        myHitCapHard = 368
     elseif mb_mySpec == "Arms" then
         myHitCapHard = 263
         myArmorPenetrationCapHard = 1260

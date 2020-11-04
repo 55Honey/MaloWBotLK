@@ -33,7 +33,7 @@ function mb_Paladin_Protection_OnUpdate()
         return
     end
 
-    if not UnitBuff("player", "Seal of Corruption") and mb_CastSpellWithoutTarget("Seal of Corruption") then
+    if not UnitBuff("player", mb_MySeal) and mb_CastSpellWithoutTarget(mb_MySeal) then
         return
     end
 
@@ -112,8 +112,8 @@ end
 
 function mb_Paladin_Protection_ReadyCheck()
     local ready = true
-    if mb_GetBuffTimeRemaining("player", "Seal of Corruption") < 540 then
-        CancelUnitBuff("player", "Seal of Corruption")
+    if mb_GetBuffTimeRemaining("player", mb_MySeal) < 540 then
+        CancelUnitBuff("player", mb_MySeal)
         ready = false
     end
     return ready
