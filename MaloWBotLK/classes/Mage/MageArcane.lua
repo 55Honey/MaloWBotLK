@@ -109,6 +109,8 @@ function mb_Mage_Arcane_OnUpdate()
     if mb_CastSpellOnTarget("Arcane Blast") then
         return
     end
+
+    if UnitLevel("player") < 80 then mb_CastSpellOnTarget("Fireball") end
 end
 
 function mb_Mage_DischargeBlastStacks()

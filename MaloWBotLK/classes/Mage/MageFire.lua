@@ -61,5 +61,7 @@ function mb_Mage_Fire_OnUpdate()
         return
     end
 
-    CastSpellByName("Fireball")
+    if mb_CastSpellOnTarget("Fireball") then
+        return
+    end
 end
