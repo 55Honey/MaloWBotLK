@@ -27,6 +27,7 @@ function mb_Druid_Restoration_OnUpdate()
     end
 
     if not UnitAffectingCombat("player") then
+        mb_AcquireOffensiveTarget()
         return false
     end
 

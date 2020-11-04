@@ -28,6 +28,11 @@ function mb_Priest_Holy_OnUpdate()
         return
     end
 
+    if not UnitAffectingCombat("player") then
+        mb_AcquireOffensiveTarget()
+        return false
+    end
+
     if mb_UnitPowerPercentage("player") < 50 and UnitAffectingCombat("player") and mb_CanCastSpell("Shadowfiend") then
         AssistUnit(mb_commanderUnit)
         if mb_CastSpellOnTarget("Shadowfiend") then
