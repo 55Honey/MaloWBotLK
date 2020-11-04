@@ -4,6 +4,8 @@ mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"}
 mb_config.mainTank = "Fahrif"
 mb_config.offTank = "Naina"
 
+mb_config.InnervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
+
 mb_config.trustedCharacters = {}
 table.insert(mb_config.trustedCharacters, "Honey")
 table.insert(mb_config.trustedCharacters, "Ravemail")

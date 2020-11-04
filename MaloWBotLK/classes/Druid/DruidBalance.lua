@@ -31,8 +31,10 @@ end
 
 function mb_Druid_Moonkin_OnUpdate()
 
-    if mb_Druid_Innervate("Honeyowl") then
-        return
+    for _, name in pairs(mb_config.InnervateTargets) do
+        if mb_Druid_Innervate(name) then
+            return
+        end
     end
 
     if mb_CleanseRaid("Remove Curse", "Curse") then

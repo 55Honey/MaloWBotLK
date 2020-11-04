@@ -67,7 +67,7 @@ function mb_Shaman_Restoration_OnUpdate()
         return
     end
 
-    if mb_UnitPowerPercentage("Felide") < 50 and UnitAffectingCombat("Felide") then
+    if mb_UnitPowerPercentage(mb_config.InnervateTarget) < 50 and UnitAffectingCombat(mb_config.InnervateTarget) then
         CastSpellByName("Mana Tide Totem")
         return
     end

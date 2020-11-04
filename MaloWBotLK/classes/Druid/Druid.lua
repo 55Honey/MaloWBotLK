@@ -78,7 +78,7 @@ function mb_Druid_CombatRessRequestExecutor(message, from)
 end
 
 function mb_Druid_Innervate(unit)
-    if mb_UnitPowerPercentage(unit) < 50 then
+    if mb_UnitPowerPercentage(unit) < 50 and mb_GetBuffTimeRemaining(unit, "Innervate") == 0 then
         if mb_CastSpellOnFriendly(unit, "Innervate") then
             return true
         end

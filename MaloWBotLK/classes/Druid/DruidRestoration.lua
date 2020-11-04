@@ -30,8 +30,10 @@ function mb_Druid_Restoration_OnUpdate()
         return false
     end
 
-    if mb_Druid_Innervate("Khirali") then
-        return
+    for _, name in pairs(mb_config.InnervateTargets) do
+        if mb_Druid_Innervate(name) then
+            return
+        end
     end
 
     local tanks = mb_GetTanks("Rejuvenation")
