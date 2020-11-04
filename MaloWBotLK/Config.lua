@@ -1,11 +1,13 @@
 mb_config ={}
 
-mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"}
-mb_config.mainTank = "Fahrif"
-mb_config.offTank = "Naina"
+mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"} -- Your tanks fo here. Less than 4 is fine.
+mb_config.mainTank = "Fahrif" -- old maintank definition. Required for very old class modules.
+mb_config.offTank = "Naina" -- old offtank definition. Required for very old class modules.
 
 mb_config.InnervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
+-- You caster druids will innervate the above toons below a certain mana treshhold
 
+-- any name you list as trusted can send remote commands to your toons. Make sure you delete all toons which you do not own.
 mb_config.trustedCharacters = {}
 table.insert(mb_config.trustedCharacters, "Honey")
 table.insert(mb_config.trustedCharacters, "Ravemail")
@@ -36,16 +38,6 @@ table.insert(mb_config.trustedCharacters, "Sothien")
 table.insert(mb_config.trustedCharacters, "Zakki")
 table.insert(mb_config.trustedCharacters, "Terpentin")
 
-function mb_IsTrustedCharacter(charName)
-    for _, name in pairs(mb_config.trustedCharacters) do
-        if name == charName then
-            return true
-        end
-    end
-    return false
-end
-
-
 -- List of waters that should be drunk
 mb_config.waters = {}
 table.insert(mb_config.waters, "Conjured Mana Strudel")
@@ -57,6 +49,7 @@ mb_config.classOrder.sancBlesser = 1
 mb_config.classOrder.kingsBlesser = 2
 mb_config.classOrder.wisdomBlesser = 3
 mb_config.classOrder.mightBlesser = 4
+
 mb_config.classOrder.retriAura = 1
 mb_config.classOrder.concentrationAura = 2
 mb_config.classOrder.frostAura = 3
@@ -173,7 +166,7 @@ table.insert(mb_config.raidLayout["10man"][2], "Mortifer")
 table.insert(mb_config.raidLayout["10man"][2], "Felide")
 
 
-
+-- Usually no changes required below this line --
 -- -----------------------------------------------
 -- Stat Weights for lootcouncil with /mb lc
 -- -----------------------------------------------

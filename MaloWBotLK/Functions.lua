@@ -1166,3 +1166,12 @@ function mb_DoAlchemistStuff()
         end
     end
 end
+
+function mb_IsTrustedCharacter(charName)
+    for _, name in pairs(mb_config.trustedCharacters) do
+        if name == charName then
+            return true
+        end
+    end
+    return false
+end
