@@ -1,5 +1,4 @@
 function mb_Deathknight_Blood_OnLoad()
-    mb_EnableIWTDistanceClosing("Plague Strike")
     mb_RegisterExclusiveRequestHandler("taunt", mb_Deathknight_Blood_TauntAcceptor, mb_Deathknight_Blood_TauntExecutor)
     local nStance = GetShapeshiftForm()
     if nStance ~= 2 then

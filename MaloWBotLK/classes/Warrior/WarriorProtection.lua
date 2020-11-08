@@ -6,7 +6,6 @@
 
 
 function mb_Warrior_Protection_OnLoad()
-    mb_EnableIWTDistanceClosing("Sunder Armor")
     mb_CombatLogModule_Enable()
     mb_RegisterExclusiveRequestHandler("taunt", mb_Warrior_Protection_TauntAcceptor, mb_Warrior_Protection_TauntExecutor)
     mb_RegisterInterruptSpell("Shield Bash")
