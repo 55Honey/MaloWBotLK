@@ -1,5 +1,5 @@
 # MaloWBotLK
-3.3.5 version of MaloWBot, specifically designed for the 'Wrath of the Multiboxer' private server: https://discord.gg/wwKfnKR
+3.3.5 version of MaloWBot, specifically designed for the 'Wrath of the Multiboxer' private server: https://discord.gg/K9d6enqy24
 
 Wiki: https://malowbotlk.fandom.com/wiki/MalowBotLK_Wiki
 
