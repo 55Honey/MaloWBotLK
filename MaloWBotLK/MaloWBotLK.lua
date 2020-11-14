@@ -13,7 +13,7 @@ end
 local total = 0
 local function mb_Update(self, elapsed)
 	total = total + elapsed
-	if total >= 0.05 then
+	if total >= 1 / mb_config.framerate then
 		total = 0
 		mb_OnUpdate()
 	end
@@ -579,6 +579,12 @@ function mb_HandleCommand(msg)
     matches, remainingString = mb_StringStartsWith(msg, "ench")
     if matches then
         mb_FindMissingEnchants()
+        return true
+    end
+
+    matches, remainingString = mb_StringStartsWith(msg, "item")
+    if matches then
+        mb_FindBadGear(tonumber(remainingString))
         return true
     end
 

@@ -313,7 +313,7 @@ end
 
 function mb_GetResurrectionTarget(resurrectionSpell)
     local members = mb_GetNumPartyOrRaidMembers()
-    local resUnit = nil
+    local resUnit
     for i = 1, members do
         local unit = mb_GetUnitFromPartyOrRaidIndex(i)
         if UnitIsDead(unit) and not mb_IsSomeoneResurrectingUnit(unit) and mb_IsSpellInRange(resurrectionSpell, unit) then

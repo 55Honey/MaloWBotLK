@@ -31,7 +31,7 @@ function mb_Druid_Restoration_OnUpdate()
         return false
     end
 
-    for _, name in pairs(mb_config.InnervateTargets) do
+    for _, name in pairs(mb_config.innervateTargets) do
         if mb_Druid_Innervate(name) then
             return
         end

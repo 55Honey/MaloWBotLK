@@ -31,18 +31,18 @@ end
 
 function mb_Druid_Moonkin_OnUpdate()
 
-    for _, name in pairs(mb_config.InnervateTargets) do
-        if mb_Druid_Innervate(name) then
-            return
-        end
-    end
-
     if mb_CleanseRaid("Remove Curse", "Curse") then
         return
     end
 
     if not mb_AcquireOffensiveTarget() then
         return
+    end
+
+    for _, name in pairs(mb_config.innervateTargets) do
+        if mb_Druid_Innervate(name) then
+            return
+        end
     end
 
 	mb_HandleAutomaticSalvationRequesting()
@@ -64,8 +64,7 @@ function mb_Druid_Moonkin_OnUpdate()
     end
 
     if UnitHealth("target") > 100000 and mb_CanCastSpell("Insect Swarm") and mb_GetMyDebuffTimeRemaining("target", "Insect Swarm") == 0 then
-        CastSpellByName("Insect Swarm")
-        return
+        CastSpellByName("Insect Swarm")        return
     end
 
     if UnitHealth("target") > 100000 and mb_CanCastSpell("Faerie Fire") and mb_GetMyDebuffTimeRemaining("target", "Faerie Fire") == 0 then

@@ -335,7 +335,8 @@ function mb_FindMissingEnchants()
                 isCraftingReagent = GetItemInfo(itemString)
                 --print(j)
                 --print(enchantId)
-                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols" and itemSubType ~= "Miscellaneous" and itemSubType ~= "Wands" and itemSubType ~= "Sigils" then
+                if enchantId == "0" and itemSubType ~= "Librams" and itemSubType ~= "Totems" and itemSubType ~= "Idols"
+                        and itemSubType ~= "Miscellaneous" and itemSubType ~= "Wands" and itemSubType ~= "Sigils" then
                     --print(itemSubType)
                     if j ~= 11 and j ~= 12 then
                         --print("debug2")
@@ -349,6 +350,29 @@ function mb_FindMissingEnchants()
                             mb_SayRaid("My ".. itemLink.. " is not enchanted.")
                         end
                     end
+                end
+            end
+        end
+    end
+end
+
+function mb_FindBadGear(minItemLevel)
+
+    if mb_commanderUnit == nil then
+        mb_SayRaid("Requesting BAD gear below item level ".. minItemLevel.. ":")
+        mb_SendMessage("remoteExecute ", "mb_FindBadGear()")
+    end
+
+    for j = 1, 18 do
+        if j ~= 4 then
+            local itemLink = GetInventoryItemLink("player", j)
+            if  itemLink ~= nil then
+                itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
+                itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID,
+                isCraftingReagent = GetItemInfo(itemLink)
+
+                if itemRarity < 4 or itemLevel < itemMinLevel then
+                    mb_SayRaid("My ".. itemLink.. "appears to be not decent.")
                 end
             end
         end

@@ -1,11 +1,15 @@
 mb_config ={}
 
-mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"} -- Your tanks fo here. Less than 4 is fine.
+mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"} -- Your tanks go here. Less than 4 is fine.
 mb_config.mainTank = "Fahrif" -- old maintank definition. Required for very old class modules.
 mb_config.offTank = "Naina" -- old offtank definition. Required for very old class modules.
 
-mb_config.InnervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
+mb_config.innervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
 -- You caster druids will innervate the above toons below a certain mana treshhold
+
+mb_config.framerate = 20
+-- if less time than 1 divided by framerate has passed since the last frame where rotations are handled, this frame will be skipped, saving CPU resources.
+-- framerate set to 10 equals one check every 0.1 seconds, assuming the game does run at 10 fps at least
 
 -- any name you list as trusted can send remote commands to your toons. Make sure you delete all toons which you do not own.
 mb_config.trustedCharacters = {}
@@ -675,54 +679,54 @@ mb_config.statWeights["Hunter"]["Marksmanship"].socketMeta = 100
 mb_config.statWeights["Hunter"]["Marksmanship"].socketColored = 16
 
 --Deathknight
-mb_config.statWeights["Deathknight"] = {}
+mb_config.statWeights["Death Knight"] = {}
 -- Blood Tank
-mb_config.statWeights["Deathknight"]["Blood"] = {}
-mb_config.statWeights["Deathknight"]["Blood"].agility = 0.69
-mb_config.statWeights["Deathknight"]["Blood"].intellect = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].spirit = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].strength = 0.31
-mb_config.statWeights["Deathknight"]["Blood"].stamina = 1.0
-mb_config.statWeights["Deathknight"]["Blood"].critRating = 0.22
-mb_config.statWeights["Deathknight"]["Blood"].resilienceRating = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].defenseRating = 0.9
-mb_config.statWeights["Deathknight"]["Blood"].expertiseRating = 0.38
-mb_config.statWeights["Deathknight"]["Blood"].dodgeRating = 0.5
-mb_config.statWeights["Deathknight"]["Blood"].parryRating = 0.43
-mb_config.statWeights["Deathknight"]["Blood"].blockRating = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].armorPenetrationRating = 0.26
-mb_config.statWeights["Deathknight"]["Blood"].hitRating = 0.16
-mb_config.statWeights["Deathknight"]["Blood"].hasteRating = 0.16
-mb_config.statWeights["Deathknight"]["Blood"].attackPower = 0.08
-mb_config.statWeights["Deathknight"]["Blood"].armor = 0.18
-mb_config.statWeights["Deathknight"]["Blood"].blockValue = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].spellPower = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].mp5 = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].dps = 0.0
-mb_config.statWeights["Deathknight"]["Blood"].socketMeta = 100
-mb_config.statWeights["Deathknight"]["Blood"].socketColored = 16
+mb_config.statWeights["Death Knight"]["Blood"] = {}
+mb_config.statWeights["Death Knight"]["Blood"].agility = 0.69
+mb_config.statWeights["Death Knight"]["Blood"].intellect = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].spirit = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].strength = 0.31
+mb_config.statWeights["Death Knight"]["Blood"].stamina = 1.0
+mb_config.statWeights["Death Knight"]["Blood"].critRating = 0.22
+mb_config.statWeights["Death Knight"]["Blood"].resilienceRating = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].defenseRating = 0.9
+mb_config.statWeights["Death Knight"]["Blood"].expertiseRating = 0.38
+mb_config.statWeights["Death Knight"]["Blood"].dodgeRating = 0.5
+mb_config.statWeights["Death Knight"]["Blood"].parryRating = 0.43
+mb_config.statWeights["Death Knight"]["Blood"].blockRating = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].armorPenetrationRating = 0.26
+mb_config.statWeights["Death Knight"]["Blood"].hitRating = 0.16
+mb_config.statWeights["Death Knight"]["Blood"].hasteRating = 0.16
+mb_config.statWeights["Death Knight"]["Blood"].attackPower = 0.08
+mb_config.statWeights["Death Knight"]["Blood"].armor = 0.18
+mb_config.statWeights["Death Knight"]["Blood"].blockValue = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].spellPower = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].mp5 = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].dps = 0.0
+mb_config.statWeights["Death Knight"]["Blood"].socketMeta = 100
+mb_config.statWeights["Death Knight"]["Blood"].socketColored = 16
 -- Unholy DPS
-mb_config.statWeights["Deathknight"]["Unholy"] = {}
-mb_config.statWeights["Deathknight"]["Unholy"].agility = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].intellect = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].spirit = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].strength = 1.0
-mb_config.statWeights["Deathknight"]["Unholy"].stamina = 0.01
-mb_config.statWeights["Deathknight"]["Unholy"].critRating = 0.45
-mb_config.statWeights["Deathknight"]["Unholy"].resilienceRating = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].defenseRating = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].expertiseRating = 0.51
-mb_config.statWeights["Deathknight"]["Unholy"].dodgeRating = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].parryRating = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].blockRating = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].armorPenetrationRating = 0.32
-mb_config.statWeights["Deathknight"]["Unholy"].hitRating = 0.66
-mb_config.statWeights["Deathknight"]["Unholy"].hasteRating = 0.48
-mb_config.statWeights["Deathknight"]["Unholy"].attackPower = 0.34
-mb_config.statWeights["Deathknight"]["Unholy"].armor = 0.01
-mb_config.statWeights["Deathknight"]["Unholy"].blockValue = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].spellPower = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].mp5 = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].dps = 0.0
-mb_config.statWeights["Deathknight"]["Unholy"].socketMeta = 100
-mb_config.statWeights["Deathknight"]["Unholy"].socketColored = 16
+mb_config.statWeights["Death Knight"]["Unholy"] = {}
+mb_config.statWeights["Death Knight"]["Unholy"].agility = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].intellect = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].spirit = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].strength = 1.0
+mb_config.statWeights["Death Knight"]["Unholy"].stamina = 0.01
+mb_config.statWeights["Death Knight"]["Unholy"].critRating = 0.45
+mb_config.statWeights["Death Knight"]["Unholy"].resilienceRating = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].defenseRating = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].expertiseRating = 0.51
+mb_config.statWeights["Death Knight"]["Unholy"].dodgeRating = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].parryRating = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].blockRating = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].armorPenetrationRating = 0.32
+mb_config.statWeights["Death Knight"]["Unholy"].hitRating = 0.66
+mb_config.statWeights["Death Knight"]["Unholy"].hasteRating = 0.48
+mb_config.statWeights["Death Knight"]["Unholy"].attackPower = 0.34
+mb_config.statWeights["Death Knight"]["Unholy"].armor = 0.01
+mb_config.statWeights["Death Knight"]["Unholy"].blockValue = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].spellPower = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].mp5 = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].dps = 0.0
+mb_config.statWeights["Death Knight"]["Unholy"].socketMeta = 100
+mb_config.statWeights["Death Knight"]["Unholy"].socketColored = 16

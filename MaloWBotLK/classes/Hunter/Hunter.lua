@@ -6,7 +6,7 @@ function mb_Hunter_OnLoad()
         if mb_CheckAmmoAmount("Terrorshaft Arrow", 2000) == false then
             if mb_CheckAmmoAmount("Saronite Razorheads", 2000) == false then
                 if mb_CheckAmmoAmount("Iceblade Arrow", 2000) == false then
-                    mb_SayRaid("I'm low on Arrows.")
+                    mb_SayRaid("I'm low on arrows.")
                 end
             end
         end
@@ -16,7 +16,7 @@ function mb_Hunter_OnLoad()
         if mb_CheckAmmoAmount("Frostbite Bullets", 2000) == false then
             if mb_CheckAmmoAmount("Mammoth Cutters", 2000) == false then
                 if mb_CheckAmmoAmount("Shatter Rounds", 2000) == false then
-                    mb_SayRaid("I'm low on Bullets.")
+                    mb_SayRaid("I'm low on bullets.")
                 end
             end
         end
@@ -28,7 +28,7 @@ function mb_Hunter_OnLoad()
 
     usable, noMana = IsUsableSpell("Auto Shot")
     if usable == nil and mb_Hunterweapon == true then
-        mb_SayRaid("I do not have any Ammo equipped.")
+        mb_SayRaid("I am either dead or do not have any ammo equipped.")
     end
 
     if mb_GetMySpecName() == "Beast Mastery" then
