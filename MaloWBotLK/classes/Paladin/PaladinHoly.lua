@@ -87,12 +87,12 @@ function mb_Paladin_Holy_OnUpdate()
         mb_CastSpellWithoutTarget("Divine Favor")
     end
 
-    if mb_RaidHeal("Holy Shock") then
+    if mb_RaidHeal("Holy Shock", 0.7) then
         return
     end
 
     if UnitBuff("player", "Infusion of Light") then
-        if mb_IsMoving() and mb_RaidHeal("Flash of Light") then
+        if mb_IsMoving() and mb_RaidHeal("Flash of Light", 0.7) then
             return
         end
     end
@@ -113,11 +113,11 @@ function mb_Paladin_Holy_OnUpdate()
         mb_BreakFollow()
     end
 
-    if mb_RaidHeal("Holy Light", 1.2) then
+    if mb_RaidHeal("Holy Light", 0.9) then
         return
     end
 
-    if mb_RaidHeal("Flash of Light") then
+    if mb_RaidHeal("Flash of Light", 0.7) then
         return
     end
 

@@ -2,6 +2,7 @@
 -- Implement stop-casting from Paladin
 
 function mb_Druid_Restoration_OnLoad()
+    mb_preCastFinishCallback = mb_Druid_Restoration_PreCastFinishCallback
     mb_RegisterClassSpecificReadyCheckFunction(mb_Druid_ReadyCheck)
     mb_RegisterExclusiveRequestHandler("cr", mb_Druid_CombatRessRequestAcceptor, mb_Druid_CombatRessRequestExecutor)
     mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
@@ -26,9 +27,16 @@ function mb_Druid_Restoration_OnUpdate()
         return
     end
 
-    if not UnitAffectingCombat("player") then
-        mb_AcquireOffensiveTarget()
-        return false
+    if mb_commanderUnit ~= nil then
+        if not UnitAffectingCombat(mb_commanderUnit) then
+            mb_AcquireOffensiveTarget()
+            return false
+        end
+    else
+        if not UnitAffectingCombat("player") then
+            mb_AcquireOffensiveTarget()
+            return false
+        end
     end
 
     for _, name in pairs(mb_config.innervateTargets) do
@@ -103,14 +111,20 @@ function mb_Druid_Restoration_OnUpdate()
         end
     end
 
-    if tanks[3] ~= nil and not mb_UnitHasMyBuff(tanks[3], "Lifebloom") then
-        if mb_CastSpellOnFriendly(tanks[3], "Lifebloom") then
+    if mb_config.tanks[2] ~= nil and mb_GetMissingHealth(mb_config.tanks[2]) > 500 and not mb_UnitHasMyBuff(mb_config.tanks[2], "Lifebloom") then
+        if mb_CastSpellOnFriendly(mb_config.tanks[2], "Lifebloom") then
             return
         end
     end
 
-    if tanks[4] ~= nil and not mb_UnitHasMyBuff(tanks[4], "Lifebloom") then
-        if mb_CastSpellOnFriendly(tanks[4], "Lifebloom") then
+    if mb_config.tanks[3] ~= nil and mb_GetMissingHealth(mb_config.tanks[3]) > 500 and not mb_UnitHasMyBuff(mb_config.tanks[3], "Lifebloom") then
+        if mb_CastSpellOnFriendly(mb_config.tanks[3], "Lifebloom") then
+            return
+        end
+    end
+
+    if mb_config.tanks[4] ~= nil and mb_GetMissingHealth(mb_config.tanks[4]) > 500 and not mb_UnitHasMyBuff(mb_config.tanks[4], "Lifebloom") then
+        if mb_CastSpellOnFriendly(mb_config.tanks[4], "Lifebloom") then
             return
         end
     end
@@ -144,4 +158,19 @@ function mb_Druid_Restoration_BlanketRaid()
     end
 
     return false
+end
+
+function mb_Druid_Restoration_PreCastFinishCallback(spell, unit)
+    if spell ~= "Nourish" and spell ~= "Regrowth" then
+        return
+    end
+    if unit == nil then
+        return
+    end
+    local spellTargetUnitMissingHealth = mb_GetMissingHealth(unit)
+    local healAmount = mb_GetSpellEffect(spell)
+
+    if healAmount * 1.1 > spellTargetUnitMissingHealth then
+        mb_StopCast()
+    end
 end

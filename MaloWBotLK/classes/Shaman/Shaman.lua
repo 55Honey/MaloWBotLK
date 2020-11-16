@@ -22,15 +22,6 @@ function mb_Shaman_OnLoad()
     mb_RegisterExclusiveRequestHandler("heroism", mb_Shaman_HeroismRequestAcceptor, mb_Shaman_HeroismRequestExecutor)
 end
 
-function mb_Shaman_ChainHealRaid()
-    local healUnit, missingHealth = mb_GetMostDamagedFriendly("Chain Heal")
-    if missingHealth > mb_GetSpellEffect("Chain Heal") then
-        mb_CastSpellOnFriendly(healUnit, "Chain Heal")
-        return true
-    end
-    return false
-end
-
 function mb_Shaman_ApplyWeaponEnchants(mainHandSpell, offHandSpell)
     local hasMainHandEnchant, mainHandExpiration, _, hasOffHandEnchant, offHandExpiration = GetWeaponEnchantInfo()
     if not hasMainHandEnchant then

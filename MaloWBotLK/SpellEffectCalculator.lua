@@ -163,7 +163,16 @@ mb_spellEffectBaseValues["Regrowth"][9] = 1231
 mb_spellEffectBaseValues["Regrowth"][10] = 1491
 mb_spellEffectBaseValues["Regrowth"][11] = 2099
 mb_spellEffectBaseValues["Regrowth"][12] = 2744
-
+-- Circle of Healing
+mb_spellEffectBaseValues["Circle of Healing"] = {}
+mb_spellEffectBaseValues["Circle of Healing"].coefficient = 0.40
+mb_spellEffectBaseValues["Circle of Healing"][1] = 361
+mb_spellEffectBaseValues["Circle of Healing"][2] = 424
+mb_spellEffectBaseValues["Circle of Healing"][3] = 482
+mb_spellEffectBaseValues["Circle of Healing"][4] = 545
+mb_spellEffectBaseValues["Circle of Healing"][5] = 602
+mb_spellEffectBaseValues["Circle of Healing"][6] = 868
+mb_spellEffectBaseValues["Circle of Healing"][7] = 1008
 
 function mb_GetSpellEffect(spell)
     local _, rank = GetSpellInfo(spell)

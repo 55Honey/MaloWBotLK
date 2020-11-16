@@ -1,4 +1,5 @@
 function mb_Shaman_Restoration_OnLoad()
+    mb_preCastFinishCallback = mb_Shaman_Restoration_PreCastFinishCallback
     mb_desiredFlaskEffect = 67016 --67016=SP, 67017=AP, 67018=Strength
     mb_Shaman_SetEarthTotem("Tremor Totem")
     mb_Shaman_SetFireTotem("Flametongue Totem")
@@ -91,7 +92,7 @@ function mb_Shaman_Restoration_OnUpdate()
         end
     end
 
-    if mb_Shaman_ChainHealRaid() then
+    if mb_RaidHeal("Chain Heal", 0.8) then
         return
     end
 
@@ -109,4 +110,19 @@ function mb_Shaman_HandleFocusHealing()
         return true
     end
     return false
+end
+
+function mb_Shaman_Restoration_PreCastFinishCallback(spell, unit)
+    if spell ~= "Chain Heal" and spell ~= "Lesser Healing Wave" and spell ~= "Healing Wave" then
+        return
+    end
+    if unit == nil then
+        return
+    end
+    local spellTargetUnitMissingHealth = mb_GetMissingHealth(unit)
+    local healAmount = mb_GetSpellEffect(spell)
+
+    if healAmount * 1.1 > spellTargetUnitMissingHealth then
+        mb_StopCast()
+    end
 end

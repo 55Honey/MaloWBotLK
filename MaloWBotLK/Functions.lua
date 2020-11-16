@@ -807,7 +807,7 @@ function mb_SpecNotSupported(msg)
 end
 
 function mb_IsTank()
-    return mb_GetMySpecName() == "Protection" or mb_GetMySpecName() == "Feral Combat" or mb_GetMySpecName() == "Frost"
+    return mb_GetMySpecName() == "Protection" or mb_GetMySpecName() == "Feral Combat" or mb_GetMySpecName() == "Blood"
 end
 
 function mb_IsHealer()

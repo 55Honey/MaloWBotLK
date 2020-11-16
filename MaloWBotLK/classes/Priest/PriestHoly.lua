@@ -1,4 +1,5 @@
 function mb_Priest_Holy_OnLoad()
+    mb_preCastFinishCallback = mb_Priest_Holy_PreCastFinishCallback
     mb_RegisterClassSpecificReadyCheckFunction(mb_Priest_ReadyCheck)
     mb_RegisterExclusiveRequestHandler("external", mb_Priest_Holy_ExternalRequestAcceptor, mb_Priest_Holy_ExternalRequestExecutor)
 end
@@ -78,28 +79,17 @@ function mb_Priest_Holy_OnUpdate()
     end
 
     if UnitBuff("player", "Surge of Light") then
-        if mb_CanCastSpell("Flash Heal") then
-            local healUnit, missingHealth = mb_GetMostDamagedFriendly("Flash Heal")
-            if missingHealth > 4000 then
-                mb_CastSpellOnFriendly(healUnit, "Flash Heal")
-                return
-            end
-        end
-    end
-
-    if mb_CanCastSpell("Circle of Healing") then
-        local healUnit, missingHealth = mb_GetMostDamagedFriendly("Circle of Healing")
-        if missingHealth > 3000 then
-            mb_CastSpellOnFriendly(healUnit, "Circle of Healing")
+        if mb_RaidHeal("Flash Heal", 0.8) then
             return
         end
     end
 
-    local healUnit, missingHealth = mb_GetMostDamagedFriendly("Flash Heal")
-    if missingHealth > 4000 then
-        if mb_CastSpellOnFriendly(healUnit, "Flash Heal") then
-            return
-        end
+    if mb_RaidHeal("Circle of Healing", 0.5) then
+        return
+    end
+
+    if mb_RaidHeal("Flash Heal", 0.8) then
+        return
     end
 end
 
@@ -127,14 +117,37 @@ function mb_Priest_Holy_ExternalRequestExecutor(message, from)
     return false
 end
 
+function mb_Priest_Holy_PreCastFinishCallback(spell, unit)
+    if spell ~= "Circle of Healing" and spell ~= "Flash Heal" then
+        return
+    end
+    if unit == nil then
+        return
+    end
+    local spellTargetUnitMissingHealth = mb_GetMissingHealth(unit)
+    local healAmount = mb_GetSpellEffect(spell)
+
+    if healAmount * 1.1 > spellTargetUnitMissingHealth then
+        mb_StopCast()
+    end
+end
+
 -- Experimental handling of Roleplay stuff
 function mb_HandleRoleplay()
     if mb_isRoleplaying == false then
         return
     end
 
-    if not UnitAffectingCombat("player") then
-        return
+    if mb_commanderUnit ~= nil then
+        if not UnitAffectingCombat(mb_commanderUnit) then
+            mb_AcquireOffensiveTarget()
+            return false
+        end
+    else
+        if not UnitAffectingCombat("player") then
+            mb_AcquireOffensiveTarget()
+            return false
+        end
     end
 
     if mb_roleplayThrottle + math.random(60, 120) > mb_time then
