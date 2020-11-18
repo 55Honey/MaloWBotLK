@@ -4,6 +4,8 @@
 -- mb_PrintHitCaps()        Makes all toons print only HIT caps.
 -- mb_PrintAllCaps()        makes all toons print ALL caps.
 
+-- Note: 1% Melee Hit = 32.79 hit rating, and 1% Spell Hit = 26.23 hit
+
 function mb_CheckStatCaps()
     local mb_mySpec = mb_GetMySpecName()
     local mb_myClass = mb_GetClass("player")
@@ -360,7 +362,7 @@ function mb_FindBadGear(minItemLevel)
 
     if mb_commanderUnit == nil then
         mb_SayRaid("Requesting BAD gear below item level ".. minItemLevel.. ":")
-        mb_SendMessage("remoteExecute ", "mb_FindBadGear()")
+        mb_SendMessage("remoteExecute ", "mb_FindBadGear(".. minItemLevel.. ")")
     end
 
     for j = 1, 18 do
@@ -370,8 +372,9 @@ function mb_FindBadGear(minItemLevel)
                 itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
                 itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID,
                 isCraftingReagent = GetItemInfo(itemLink)
+                if itemLevel == nil then itemLevel = 0 end
 
-                if itemRarity < 4 or itemLevel < itemMinLevel then
+                if itemRarity < 4 or itemLevel < minItemLevel then
                     mb_SayRaid("My ".. itemLink.. "appears to be not decent.")
                 end
             end

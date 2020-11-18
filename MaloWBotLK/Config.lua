@@ -4,6 +4,9 @@ mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"} -- Your tanks go here. L
 mb_config.mainTank = "Fahrif" -- old maintank definition. Required for very old class modules.
 mb_config.offTank = "Naina" -- old offtank definition. Required for very old class modules.
 
+mb_config.HysteriaTarget = "Zakki"
+-- Your Blood DKs will try cast Hysteria on this target one after another
+
 mb_config.innervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
 -- You caster druids will innervate the above toons below a certain mana treshhold
 

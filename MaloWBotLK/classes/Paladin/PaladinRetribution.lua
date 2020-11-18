@@ -1,7 +1,7 @@
 -- TODO:
 -- Lay on Hands on someone really low in the raid
 -- Divine Protection pre-taking damage, probably through a "use personals" macro
--- Hammer of Justice targets, both as interrupt and as stun
+-- Hammer of Justice targets as stun
 -- Hand of Freedom when someone or self is slowed
 -- Hand of Protection on a friendly who has aggro who shouldn't have aggro
 -- Hand of Reckoning if the tank is almost undead, maybe as the prot in waiting, equipping a shield and using SotR and a personal CD
@@ -14,6 +14,7 @@ function mb_Paladin_Retribution_OnLoad()
     mb_EnableIWTDistanceClosing("Crusader Strike")
     mb_RegisterDesiredBuff(BUFF_MIGHT)
     mb_RegisterClassSpecificReadyCheckFunction(mb_Paladin_Retribution_ReadyCheck)
+    mb_RegisterInterruptSpell("Hammer of Justice")
 end
 
 function mb_Paladin_Retribution_OnUpdate()

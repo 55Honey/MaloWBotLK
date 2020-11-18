@@ -5,6 +5,10 @@ function mb_Deathknight_Blood_OnLoad()
         mb_SayRaid("Blood Tank Rotation requires Frost Presence to be effective.")
     end
     mb_LastPestilenceTime = 0
+    local _, _, _, _, Hysteria = GetTalentInfo(1, 19)
+    if Hysteria > 0 then
+       mb_HasHysteria = true
+    end
 end
 
 function mb_Deathknight_Blood_OnUpdate()
@@ -15,7 +19,7 @@ function mb_Deathknight_Blood_OnUpdate()
         return
     end
 
-    if not IsMounted() and not UnitAffectingCombat("player") and mb_CastSpellWithoutTarget("Horn of Winter") then	 -- keep buff up, use on CD. High Prio out of combat. Low prio out of combat at the end of the rotation.
+    if not IsMounted() and not UnitAffectingCombat("player") and mb_CastSpellWithoutTarget("Horn of Winter") then	 -- keep buff up, use on CD. High Prio out of combat. Low prio in combat at the end of the rotation.
         --mb_Print("HoW")
         return
     end
@@ -74,8 +78,10 @@ function mb_Deathknight_Blood_OnUpdate()
         if mb_CastSpellWithoutTarget("Dancing Rune Weapon") then
             return
         end
-        if mb_CastSpellOnFriendly("Ravemail", "Hysteria") then
-            return
+        if mb_HasHysteria and mb_GetBuffTimeRemaining(mb_Config.HysteriaTarget) == 0 then
+            if mb_CastSpellOnFriendly(mb_Config.HysteriaTarget, "Hysteria") then
+                return
+            end
         end
     end
 

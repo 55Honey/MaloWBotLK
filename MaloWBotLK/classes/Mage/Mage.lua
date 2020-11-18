@@ -7,6 +7,7 @@ function mb_Mage_OnLoad()
         mb_classSpecificRunFunction = mb_Mage_Fire_OnUpdate
         mb_SpecNotSupported("Fire Mages are not yet supported")
     else
+        mb_Mage_Frost_OnLoad()
         mb_classSpecificRunFunction = mb_Mage_Frost_OnUpdate
     end
 
