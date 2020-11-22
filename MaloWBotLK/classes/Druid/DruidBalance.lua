@@ -86,16 +86,16 @@ function mb_Druid_Moonkin_OnUpdate()
         return
     end
 
-    CastSpellByName("Wrath")
+    if mb_CastSpellOnTarget("Wrath") then
+        return
+    end
 end
 
 function mb_Druid_HandleEclipse(solar, lunar)
-    if solar == true and mb_CanCastSpell("Wrath") then
-        CastSpellByName("Wrath")
+    if solar == true and mb_CastSpellOnTarget("Wrath") then
         return true
     end
-    if lunar == true and mb_CanCastSpell("Starfire") then
-        CastSpellByName("Starfire")
+    if lunar == true and mb_CastSpellOnTarget("Starfire") then
         return true
     end
 

@@ -57,6 +57,13 @@ function mb_Rogue_Combat_OnUpdate()
         end
     end
 
+    local tanks = mb_GetTanks("Tricks of the Trade")
+    if mb_UnitHealthPercentage("target") > 90 then
+        if mb_CastSpellOnFriendly(tanks[1], "Tricks of the Trade") then
+            return
+        end
+    end
+
     if mb_ShouldUseDpsCooldowns("Sinister Strike") then
         mb_UseItemCooldowns()
         if mb_CastSpellWithoutTarget("Blade Flurry") then
@@ -68,6 +75,9 @@ function mb_Rogue_Combat_OnUpdate()
             end
         end
         if mb_CastSpellWithoutTarget("Adrenaline Rush") then
+            return
+        end
+        if mb_HandleTricksOfTheTrade() then
             return
         end
     end

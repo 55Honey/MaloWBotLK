@@ -29,6 +29,8 @@ function mb_Shaman_Enhancement_OnLoad()
     mb_RegisterClassSpecificReadyCheckFunction(mb_Shaman_Enhancement_ReadyCheck)
 end
 
+mb_LastFireElementalTotem = 0
+
 function mb_Shaman_Enhancement_OnUpdate()
     if not mb_IsReadyForNewCast() then
         return
@@ -63,6 +65,13 @@ function mb_Shaman_Enhancement_OnUpdate()
     if not UnitAffectingCombat("player") and not UnitBuff("player", "Lightning Shield") then
         if mb_CastSpellWithoutTarget("Lightning Shield") then
             return
+        end
+    end
+
+    if mb_LastFireElementalTotem + 5 < mb_time then
+        local haveTotem, totemName, startTime, duration, icon = GetTotemInfo(1)
+        if haveTotem ~= true then
+            mb_Shaman_SetFireTotem("Magma Totem")
         end
     end
 
@@ -122,6 +131,13 @@ function mb_Shaman_Enhancement_OnUpdate()
 
     if mb_ShouldUseDpsCooldowns("Stormstrike") then
         mb_UseItemCooldowns()
+        if mb_GetRemainingSpellCooldown("Fire Elemental Totem") == 0 then
+            mb_Shaman_SetFireTotem("Fire Elemental Totem")
+            if mb_CastSpellWithoutTarget("Fire Elemental Totem") then
+                mb_LastFireElementalTotem = mb_time
+                return
+            end
+        end
         if mb_CastSpellWithoutTarget("Feral Spirit") then
             return
         end

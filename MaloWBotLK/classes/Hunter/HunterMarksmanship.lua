@@ -13,6 +13,22 @@ function mb_Hunter_Marksmanship_OnUpdate()
         return
     end
 
+    if not mb_UnitHasMyBuff("player", "Trueshot Aura") and mb_CastSpellWithoutTarget("Trueshot Aura") then
+        return
+    end
+
+    if not mb_UnitHasMyBuff("player", "Aspect of the Dragonhawk") and mb_UnitPowerPercentage("player") > 80 then
+        if mb_CastSpellOnSelf("Aspect of the Dragonhawk") then
+            return
+        end
+    end
+
+    if mb_UnitPowerPercentage("player") < 10 and not mb_UnitHasMyBuff("player", "Aspect of the Viper") then
+        if mb_CastSpellOnSelf("Aspect of the Viper") then
+            return
+        end
+    end
+
     if not UnitAffectingCombat("player") and not PetHasActionBar() and mb_CastSpellWithoutTarget("Revive Pet") then
         return
     end
@@ -67,7 +83,7 @@ function mb_Hunter_Marksmanship_OnUpdate()
         return
     end
 
-    if mb_GetMyDebuffTimeRemaining("target", "Serpent Sting") == 0 and mb_CastSpellOnTarget("Serpent Sting") then 
+    if mb_GetMyDebuffTimeRemaining("target", "Serpent Sting") == 0 and mb_CastSpellOnTarget("Serpent Sting") then
         return
     end
 

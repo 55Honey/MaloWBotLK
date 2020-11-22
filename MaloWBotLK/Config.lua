@@ -10,6 +10,9 @@ mb_config.HysteriaTarget = "Zakki"
 mb_config.innervateTargets = {"Predetar", "Sanjana", "Khirali", "Honeyowl", "Ilnara", "Tristan", "Rincewind"}
 -- You caster druids will innervate the above toons below a certain mana treshhold
 
+mb_config.TricksOfTheTradeTargets = {"Mortifer"}
+-- Your rogues will try to cast TotT on the above toons, if DPS cooldown are free and if they do not have it already
+
 mb_config.framerate = 20
 -- if less time than 1 divided by framerate has passed since the last frame where rotations are handled, this frame will be skipped, saving CPU resources.
 -- framerate set to 10 equals one check every 0.1 seconds, assuming the game does run at 10 fps at least
@@ -65,6 +68,8 @@ mb_config.classOrder.fireAura = 5
 mb_config.classOrder.crusaderAura = 6
 mb_config.classOrder.shadowAura = 7
 
+-- This elemental shaman will never use Fire Elemental Totem to make sure the %crit debuff from Totem of Wrath is always blacklistedInterruptSpells
+mb_config.IgnoreFireElementalTotem = "Totemtoni"
 
 -- Blacklisted interrupt spells, spell that are not interruptible but that shows as interruptible
 mb_config.blacklistedInterruptSpells = {}
@@ -174,6 +179,16 @@ table.insert(mb_config.raidLayout["10man"][2], "Felide")
 
 
 -- Usually no changes required below this line --
+
+-- -----------------------------------------------
+-- Accepted overheal modifiers
+-- -----------------------------------------------
+mb_config.OverhealModifierPaladin = 1.2
+mb_config.OverhealModifierShaman = 1.2
+mb_config.OverhealModifierDruid = 1.2
+mb_config.OverhealModifierHolyPriest = 1.2
+mb_config.OverhealModifierDiscPriest = 1.2--currently unused
+
 -- -----------------------------------------------
 -- Stat Weights for lootcouncil with /mb lc
 -- -----------------------------------------------

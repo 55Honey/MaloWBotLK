@@ -79,17 +79,25 @@ function mb_Priest_Holy_OnUpdate()
     end
 
     if UnitBuff("player", "Surge of Light") then
-        if mb_RaidHeal("Flash Heal", 0.8) then
+        if mb_RaidHeal("Flash Heal", tonumber(mb_config.OverhealModifierHolyPriest)) then
             return
         end
     end
 
-    if mb_RaidHeal("Circle of Healing", 0.5) then
+    if mb_RaidHeal("Circle of Healing", tonumber(mb_config.OverhealModifierHolyPriest)) then
         return
     end
 
-    if mb_RaidHeal("Flash Heal", 0.8) then
+    if mb_RaidHeal("Flash Heal", tonumber(mb_config.OverhealModifierHolyPriest)) then
         return
+    end
+
+    if UnitAffectingCombat("player") then
+        if mb_config.tanks[1] ~= nil and mb_CastSpellOnFriendly(mb_config.tanks[1], "Greater Heal") then
+            return
+        elseif mb_CastSpellOnFriendly("player", "Greater Heal") then
+            return
+        end
     end
 end
 
@@ -127,7 +135,7 @@ function mb_Priest_Holy_PreCastFinishCallback(spell, unit)
     local spellTargetUnitMissingHealth = mb_GetMissingHealth(unit)
     local healAmount = mb_GetSpellEffect(spell)
 
-    if healAmount * 1.1 > spellTargetUnitMissingHealth then
+    if healAmount > spellTargetUnitMissingHealth * tonumber(mb_config.OverhealModifierHolyPriest) then
         mb_StopCast()
     end
 end

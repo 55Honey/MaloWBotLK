@@ -6,6 +6,8 @@ function mb_Shaman_Elemental_OnLoad()
 	mb_Shaman_SetAirTotem("Wrath of Air Totem")
 end
 
+mb_LastFireElementalTotem = 0
+
 function mb_Shaman_Elemental_OnUpdate()
 	if not mb_IsReadyForNewCast() then
 		return
@@ -21,6 +23,13 @@ function mb_Shaman_Elemental_OnUpdate()
 
 	if mb_Shaman_ApplyWeaponEnchants("Flametongue Weapon") then
 		return
+	end
+
+	if mb_LastFireElementalTotem + 5 < mb_time then
+		local haveTotem, totemName, startTime, duration, icon = GetTotemInfo(1)
+		if haveTotem ~= true then
+			mb_Shaman_SetFireTotem("Totem of Wrath")
+		end
 	end
 
 	if mb_Shaman_HandleTotems() then
@@ -55,6 +64,17 @@ function mb_Shaman_Elemental_OnUpdate()
 	if mb_ShouldUseDpsCooldowns("Lightning Bolt") and UnitAffectingCombat("player") then
 		mb_UseItemCooldowns()
 		mb_CastSpellWithoutTarget("Elemental Mastery")
+
+		local name, realm = UnitName("player")
+		if mb_config.IgnoreFireElementalTotem ~= name then
+			if mb_GetRemainingSpellCooldown("Fire Elemental Totem") == 0 then
+				mb_Shaman_SetFireTotem("Fire Elemental Totem")
+				if mb_CastSpellWithoutTarget("Fire Elemental Totem") then
+					mb_LastFireElementalTotem = mb_time
+					return
+				end
+			end
+		end
 	end
 
 	mb_Shaman_Elemental_HandleFlameShock()

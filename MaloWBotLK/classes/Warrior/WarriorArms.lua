@@ -54,14 +54,17 @@ function mb_Warrior_Arms_OnUpdate()
 
     if UnitPower("player") >= 75 then
         if mb_cleaveMode > 0 then
-            mb_CastSpellOnTarget("Cleave")
+            if mb_CastSpellOnTarget("Cleave") then
+                return
+            end
         else
-            mb_CastSpellOnTarget("Heroic Strike")
+            if mb_CastSpellOnTarget("Heroic Strike")then
+                return
+            end
         end
     end
 
-    if mb_GetMyDebuffTimeRemaining("target", "Rend") == 0 then
-        mb_CastSpellOnTarget("Rend")
+    if mb_GetMyDebuffTimeRemaining("target", "Rend") == 0 and mb_CastSpellOnTarget("Rend") then
         return
     end
 
@@ -79,8 +82,7 @@ function mb_Warrior_Arms_OnUpdate()
         end
     end
 
-    if UnitBuff("player", "Sudden Death") then
-        mb_CastSpellOnTarget("Execute")
+    if UnitBuff("player", "Sudden Death") and mb_CastSpellOnTarget("Execute") then
         return
     end
 

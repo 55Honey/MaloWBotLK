@@ -7,7 +7,10 @@
 -- Possible mb_isMoving() check for Shadowflaming in cleaveMode
 
 mb_Warlock_executeCorruption = false
+mb_Warlock_TotTWithExecuteCorruption = false
 mb_Warlock_lastUnstableTime = 0
+mb_Warlock_TotTWithCorruption = false
+mb_FirstTryExecuteCorruption = 0
 
 function mb_Warlock_Affliction_OnLoad()
     mb_RegisterClassSpecificReadyCheckFunction(mb_Warlock_ReadyCheck)
@@ -50,6 +53,8 @@ function mb_Warlock_Affliction_OnUpdate()
 
     if mb_UnitHealthPercentage("target") > 35 and mb_Warlock_executeCorruption then
         mb_Warlock_executeCorruption = false
+        mb_Warlock_TotTWithExecuteCorruption = false
+        mb_FirstTryExecuteCorruption = 0
     end
 
     if UnitExists("playerpet") and mb_Warlock_petAttack then
@@ -90,6 +95,15 @@ function mb_Warlock_Affliction_OnUpdate()
     end
 
     if UnitDebuff("target", "Shadow Mastery") and mb_GetMyDebuffTimeRemaining("target", "Corruption") == 0 and mb_CastSpellOnTarget("Corruption") then
+        if mb_GetBuffTimeRemaining("player", "Tricks of the Trade") > 0 then
+            mb_Warlock_TotTWithCorruption = true
+            if mb_UnitHealthPercentage("target") < 35 then
+                mb_Warlock_TotTWithExecuteCorruption = true
+                mb_Warlock_TotTWithCorruption = true
+            else
+                mb_Warlock_TotTWithCorruption = true
+            end
+        end
         return
     end
 
@@ -116,10 +130,17 @@ function mb_Warlock_Affliction_OnUpdate()
         end
     end
 
-    if mb_UnitHealthPercentage("target") < 35 and UnitHealth("target") > 150000 and not mb_Warlock_executeCorruption then
-        if mb_CastSpellOnTarget("Corruption") then
+    if mb_UnitHealthPercentage("target") < 35 and UnitHealth("target") > 150000 and not mb_Warlock_TotTWithExecuteCorruption then
+        if mb_FirstTryExecuteCorruption == 0 then
+            mb_FirstTryExecuteCorruption= mb_time
+        end
+        if mb_GetBuffTimeRemaining("player", "Tricks of the Trade") and mb_CastSpellOnTarget("Corruption") then
             mb_Warlock_executeCorruption = true
+            mb_Warlock_TotTWithExecuteCorruption = true
             return
+        end
+        if not mb_Warlock_executeCorruption and mb_FirstTryExecuteCorruption + 5 < mb_time and mb_CastSpellOnTarget("Corruption") then
+            mb_Warlock_executeCorruption = true
         end
     end
 

@@ -92,13 +92,23 @@ function mb_Shaman_Restoration_OnUpdate()
         end
     end
 
-    if mb_RaidHeal("Chain Heal", 0.8) then
+    if mb_RaidHeal("Chain Heal", tonumber(mb_config.OverhealModifierShaman)) then
         return
     end
 
-    if mb_UnitPowerPercentage("player") > 80 and mb_AcquireOffensiveTarget() then
-        if mb_CastSpellOnTarget("Lightning Bolt") then
-            return
+    if mb_config.OverhealModifierShaman >= 1 then
+        if UnitAffectingCombat("player") then
+            if mb_config.tanks[1] ~= nil and mb_CastSpellOnFriendly(mb_config.tanks[1], "Healing Wave") then
+                return
+            elseif mb_CastSpellOnFriendly("player", "Healing Wave") then
+                return
+            end
+        end
+    else
+        if mb_UnitPowerPercentage("player") > 80 and mb_AcquireOffensiveTarget() then
+            if mb_CastSpellOnTarget("Lightning Bolt") then
+                return
+            end
         end
     end
 end

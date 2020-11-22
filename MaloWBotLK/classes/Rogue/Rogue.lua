@@ -88,3 +88,14 @@ function mb_Rogue_GetPredictedEnergyIn(time)
     end
     return energy
 end
+
+function mb_HandleTricksOfTheTrade()
+    for i ,name in pairs(mb_config.TricksOfTheTradeTargets) do
+        if mb_GetBuffTimeRemaining(name, "Tricks of the Trade") == 0 then
+            if mb_CastSpellOnFriendly(name, "Tricks of the Trade") then
+                return true
+            end
+        end
+    end
+    return false
+end

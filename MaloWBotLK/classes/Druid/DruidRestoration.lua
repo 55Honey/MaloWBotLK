@@ -170,7 +170,7 @@ function mb_Druid_Restoration_PreCastFinishCallback(spell, unit)
     local spellTargetUnitMissingHealth = mb_GetMissingHealth(unit)
     local healAmount = mb_GetSpellEffect(spell)
 
-    if healAmount * 1.1 > spellTargetUnitMissingHealth then
+    if healAmount > spellTargetUnitMissingHealth * tonumber(mb_config.OverhealModifierDruid) then
         mb_StopCast()
     end
 end

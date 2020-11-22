@@ -37,6 +37,11 @@ function mb_Priest_Shadow_OnUpdate()
         return
     end
 
+    if UnitExists("playerpet") then
+        PetPassiveMode()
+        mb_SetPetAutocast("Shadowcrawl", true)
+    end
+
     local _, _, text = UnitChannelInfo("player")
     if text == "Channeling" then
         return
@@ -74,24 +79,33 @@ function mb_Priest_Shadow_OnUpdate()
         return
     end
 
-    if mb_UnitPowerPercentage("player") < 50 and mb_CastSpellWithoutTarget("Dispersion") then
+    if UnitExists("playerpet") then
+        PetAttack()
+    end
+
+    if mb_ShouldUseDpsCooldowns("Shadowfiend") then -- pop dps cooldowns regardless of current mana
+        mb_UseItemCooldowns()
+        if mb_CastSpellOnTarget("Shadowfiend") then
+            return
+        end
+    end
+
+    if mb_UnitPowerPercentage("player") < 15 then
+        if mb_CastSpellOnTarget("Shadowfiend") then
+            mb_Priest_Shadow_lastShadowFiendTime = mb_time
+            return
+        elseif mb_CastSpellWithoutTarget("Hymn of Hope") and mb_Priest_Shadow_lastShadowFiendTime + 5 > mb_time then
+            return
+        end
+    end
+
+    if mb_UnitPowerPercentage("player") < 7 and mb_CastSpellWithoutTarget("Dispersion") then
         return
     end
 
-    if mb_UnitPowerPercentage("player") < 50 then
+    if mb_UnitPowerPercentage("player") < 5 then -- pop trinkets <5% for mana gain, we have tried everything else
         mb_UseItemCooldowns()
-        if mb_UnitPowerPercentage("player") < 90 and mb_ShouldUseDpsCooldowns("Shadowfiend") then
-            if mb_CastSpellOnTarget("Shadowfiend") then
-                local _, autostate = GetSpellAutocast("Shadowcrawl", "pet")
-                if autostate == nil then
-                    TogglePetAutocast(4) -- Toggle Shadowcrawl ON
-                end
-                mb_Priest_Shadow_lastShadowFiendTime = mb_time
-                return
-            elseif mb_CastSpellWithoutTarget("Hymn of Hope") and mb_Priest_Shadow_lastShadowFiendTime + 5 > mb_time then
-                return
-            end
-        end
+        return
     end
 
     if mb_ShadowAuxiliaryMode ~= nil and mb_myClassOrderIndex == mbConfig.shadowAuxHandler and mb_HandleShadowAux() then  -- If mb_ShadowAuxiliaryMode is set by a macro and youre Priest#1, handle it
@@ -103,7 +117,7 @@ function mb_Priest_Shadow_OnUpdate()
     end
 
     if mb_ShadowUseWand == 1 then
-        return
+        mb_HandleWandUsage()
     end
 
     if mb_cleaveMode == 2 and mb_GetDebuffStackCount("target", "Mind Sear") == 0 and mb_CastSpellOnTarget("Mind Sear") then --If Cleave Mode is AoE go Mind Sear with high Prio
@@ -147,13 +161,8 @@ function mb_Priest_Shadow_OnUpdate()
 
     if mb_UnitPowerPercentage("player") < 2 and HasWandEquipped() ~= nil then
         mb_ShadowUseWand = 1
-        local autocastable, autostate = GetSpellAutocast("Shoot", "spell")
-        if autostate == 1 then
+        if mb_HandleWandUsage() then
             return
-        else
-            if mb_CastSpellOnTarget("Shoot") then
-                return
-            end
         end
     end
 end
@@ -200,4 +209,16 @@ function mb_PriestPomExecutor(message, from)
         return false
 
     end
+end
+
+function mb_HandleWandUsage()
+    local autocastable, autostate = GetSpellAutocast("Shoot", "spell")
+    if autostate == 1 then
+        return true
+    else
+        if mb_CastSpellOnTarget("Shoot") then
+            return true
+        end
+    end
+    return false
 end

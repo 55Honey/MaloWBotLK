@@ -87,12 +87,12 @@ function mb_Paladin_Holy_OnUpdate()
         mb_CastSpellWithoutTarget("Divine Favor")
     end
 
-    if mb_RaidHeal("Holy Shock", 0.7) then
+    if mb_RaidHeal("Holy Shock", tonumber(mb_config.OverhealModifierPaladin)) then
         return
     end
 
     if UnitBuff("player", "Infusion of Light") then
-        if mb_IsMoving() and mb_RaidHeal("Flash of Light", 0.7) then
+        if mb_IsMoving() and mb_RaidHeal("Flash of Light", tonumber(mb_config.OverhealModifierPaladin)) then
             return
         end
     end
@@ -113,11 +113,11 @@ function mb_Paladin_Holy_OnUpdate()
         mb_BreakFollow()
     end
 
-    if mb_RaidHeal("Holy Light", 0.9) then
+    if mb_RaidHeal("Holy Light", tonumber(mb_config.OverhealModifierPaladin)) then
         return
     end
 
-    if mb_RaidHeal("Flash of Light", 0.7) then
+    if mb_RaidHeal("Flash of Light", tonumber(mb_config.OverhealModifierPaladin)) then
         return
     end
 
@@ -169,7 +169,7 @@ function mb_Paladin_Holy_PreCastFinishCallback(spell, unit)
     else
         effectiveHealAmount = effectiveHealAmount + healAmount
     end
-    if effectiveHealAmount < healAmount * 0.9 then
+    if effectiveHealAmount < healAmount * tonumber(mb_config.OverhealModifierPaladin) then
         mb_StopCast()
     end
 end

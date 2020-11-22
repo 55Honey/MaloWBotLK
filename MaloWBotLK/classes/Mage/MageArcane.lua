@@ -88,12 +88,14 @@ function mb_Mage_Arcane_OnUpdate()
     end
 
     if UnitDebuff("player", "Arcane Blast") ~= nil and UnitAffectingCombat("player") then
+        local mb_BloodlustModifier = 0
+        if mb_GetBuffTimeRemaining("player", mb_Shaman_GetHeroismName()) > 0 then mb_BloodlustModifier = 2 end
+
         if mb_UnitPowerPercentage("player") > 10 then
-            if count > 3 then
+            if count > 3 + mb_BloodlustModifier then
                 mb_Mage_DischargeBlastStacks()
                 return
             end
-
         elseif mb_UnitPowerPercentage("player") <= 10 then
             if count >= 2 then
                 mb_Mage_DischargeBlastStacks()
