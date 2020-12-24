@@ -160,7 +160,7 @@ function mb_PrintAllCaps()
         mb_SayRaid("My AP SOFT cap is at ".. GetCombatRating(CR_ARMOR_PENETRATION).. " / ".. myArmorPenetrationCapSoft)
     end
     if mySpellHasteCapHard then
-        mb_SayRaid("My HASTE HARD cap is at ".. GetCombatRating(CR_ARMOR_PENETRATION).. " / ".. mySpellHasteCapHard)
+        mb_SayRaid("My HASTE HARD cap is at ".. GetCombatRating(CR_HASTE_SPELL).. " / ".. mySpellHasteCapHard)
     end
 end
 

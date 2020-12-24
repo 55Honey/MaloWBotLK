@@ -3,21 +3,22 @@ local MY_ABBREVIATION = "MB"
 
 -- Prints message in chatbox
 function mb_Print(msg)
-	if type(msg) == "table" then
-		msg = MaloWUtils_ConvertTableToString(msg)
-	end
-	MaloWUtils_Print(MY_ABBREVIATION .. ": " .. tostring(msg))
+    if type(msg) == "table" then
+        msg = MaloWUtils_ConvertTableToString(msg)
+    end
+    MaloWUtils_Print(MY_ABBREVIATION .. ": " .. tostring(msg))
 end
 
 -- Frame setup for update
 local total = 0
 local function mb_Update(self, elapsed)
-	total = total + elapsed
-	if total >= 1 / mb_config.framerate then
-		total = 0
-		mb_OnUpdate()
-	end
+    total = total + elapsed
+    if total >= 1 / mb_config.framerate then
+        total = 0
+        mb_OnUpdate()
+    end
 end
+
 local f = CreateFrame("frame", MY_NAME .. "Frame", UIParent)
 f:SetPoint("CENTER")
 f:SetScript("OnUpdate", mb_Update)
@@ -26,9 +27,9 @@ f:Show()
 
 -- Cmds
 SlashCmdList[MY_ABBREVIATION .. "COMMAND"] = function(msg)
-	if not mb_HandleCommand(msg) then
-		mb_Print("Unrecognized command: " .. msg)
-	end
+    if not mb_HandleCommand(msg) then
+        mb_Print("Unrecognized command: " .. msg)
+    end
 end
 SLASH_MBCOMMAND1 = "/" .. MY_ABBREVIATION;
 
@@ -120,6 +121,7 @@ function mb_OnEvent(self, event, arg1, arg2, arg3, arg4, ...)
         end
     end
 end
+
 f:RegisterEvent("ADDON_LOADED")
 f:RegisterEvent("CHAT_MSG_ADDON")
 f:RegisterEvent("PLAYER_ENTER_COMBAT")
@@ -154,30 +156,30 @@ function mb_InitAsSlave()
     SetCVar("autoLootDefault", 1) -- Enable autolooting
     SetChatWindowSize(1, 20) -- Set chat-font in slaves to be pretty big
 
-	mb_originalErrorHandler = geterrorhandler()
-	seterrorhandler(mb_ErrorHandler)
+    mb_originalErrorHandler = geterrorhandler()
+    seterrorhandler(mb_ErrorHandler)
 
-	if TI_VersionString ~= nil then
-		-- Turn TurnIn on if it's loaded
-		TI_Switch("on")
-		TI_status.options[7].state = true
-	end
+    if TI_VersionString ~= nil then
+        -- Turn TurnIn on if it's loaded
+        TI_Switch("on")
+        TI_status.options[7].state = true
+    end
 end
 
 function mb_InitAsCommander()
-	mb_isCommanding = true
-	mb_SendMessage("enable")
-	mb_SendMessage("setCommander", UnitName("player"))
-	mb_InitShared()
-	mb_isEnabled = true
+    mb_isCommanding = true
+    mb_SendMessage("enable")
+    mb_SendMessage("setCommander", UnitName("player"))
+    mb_InitShared()
+    mb_isEnabled = true
     SetChatWindowSize(1, 12)
 end
 
 function mb_InitShared()
-	if mb_hasInitiated then
-		return
-	end
-	mb_hasInitiated = true
+    if mb_hasInitiated then
+        return
+    end
+    mb_hasInitiated = true
 
     -- Honeys additions ------------------
     mb_lastStrafe = 0
@@ -187,88 +189,88 @@ function mb_InitShared()
     mb_lastFishingCast = 0
     -- ------------------------------------
 
-	mb_registeredMessageHandlers = {}
-	mb_RegisterMessageHandlers()
-	mb_UpdateClassOrder()
-	mb_InitClass()
-	mb_CheckDurability()
+    mb_registeredMessageHandlers = {}
+    mb_RegisterMessageHandlers()
+    mb_UpdateClassOrder()
+    mb_InitClass()
+    mb_CheckDurability()
 
-	local numSkills = GetNumSkillLines()
-	for i = 1, numSkills do
-		if GetSkillLineInfo(i) == "Skinning" then
-			mb_isSkinner = true
-		end
-		if GetSkillLineInfo(i) == "Mining" then
-			mb_isMiner = true
-		end
-		if GetSkillLineInfo(i) == "Herbalism" then
-			mb_isHerbalist = true
-		end
+    local numSkills = GetNumSkillLines()
+    for i = 1, numSkills do
+        if GetSkillLineInfo(i) == "Skinning" then
+            mb_isSkinner = true
+        end
+        if GetSkillLineInfo(i) == "Mining" then
+            mb_isMiner = true
+        end
+        if GetSkillLineInfo(i) == "Herbalism" then
+            mb_isHerbalist = true
+        end
         if GetSkillLineInfo(i) == "Alchemy" then
             mb_isAlchemist = true
         end
-	end
+    end
 end
 
 function mb_InitClass()
-	local playerClass = mb_GetClass("player")
-	if playerClass == "DEATHKNIGHT" then
-		mb_Deathknight_OnLoad()
-		mb_GCDSpell = "Death Coil"
-	elseif playerClass == "DRUID" then
-		mb_Druid_OnLoad()
-		mb_GCDSpell = "Healing Touch"
-	elseif playerClass == "HUNTER" then
-		mb_Hunter_OnLoad()
-		mb_GCDSpell = "Serpent Sting"
-	elseif playerClass == "MAGE" then
-		mb_Mage_OnLoad()
-		mb_GCDSpell = "Frost Armor"
-	elseif playerClass == "PALADIN" then
-		mb_Paladin_OnLoad()
-		mb_GCDSpell = "Seal of Righteousness"
-	elseif playerClass == "PRIEST" then
-		mb_Priest_OnLoad()
-		mb_GCDSpell = "Lesser Heal"
-	elseif playerClass == "ROGUE" then
-		mb_Rogue_OnLoad()
-		mb_GCDSpell = "Sinister Strike"
-	elseif playerClass == "SHAMAN" then
-		mb_Shaman_OnLoad()
-		mb_GCDSpell = "Healing Wave"
-	elseif playerClass == "WARLOCK" then
-		mb_Warlock_OnLoad()
-		mb_GCDSpell = "Demon Skin"
-	elseif playerClass == "WARRIOR" then
-		mb_Warrior_OnLoad()
-		mb_GCDSpell = "Hamstring"
-	else
-		mb_Print("Error, playerClass " .. tostring(playerClass) .. " not supported")
-	end
+    local playerClass = mb_GetClass("player")
+    if playerClass == "DEATHKNIGHT" then
+        mb_Deathknight_OnLoad()
+        mb_GCDSpell = "Death Coil"
+    elseif playerClass == "DRUID" then
+        mb_Druid_OnLoad()
+        mb_GCDSpell = "Healing Touch"
+    elseif playerClass == "HUNTER" then
+        mb_Hunter_OnLoad()
+        mb_GCDSpell = "Serpent Sting"
+    elseif playerClass == "MAGE" then
+        mb_Mage_OnLoad()
+        mb_GCDSpell = "Frost Armor"
+    elseif playerClass == "PALADIN" then
+        mb_Paladin_OnLoad()
+        mb_GCDSpell = "Seal of Righteousness"
+    elseif playerClass == "PRIEST" then
+        mb_Priest_OnLoad()
+        mb_GCDSpell = "Lesser Heal"
+    elseif playerClass == "ROGUE" then
+        mb_Rogue_OnLoad()
+        mb_GCDSpell = "Sinister Strike"
+    elseif playerClass == "SHAMAN" then
+        mb_Shaman_OnLoad()
+        mb_GCDSpell = "Healing Wave"
+    elseif playerClass == "WARLOCK" then
+        mb_Warlock_OnLoad()
+        mb_GCDSpell = "Demon Skin"
+    elseif playerClass == "WARRIOR" then
+        mb_Warrior_OnLoad()
+        mb_GCDSpell = "Hamstring"
+    else
+        mb_Print("Error, playerClass " .. tostring(playerClass) .. " not supported")
+    end
 end
 
 mb_classOrder = {}
 mb_myClassOrderIndex = nil
 function mb_UpdateClassOrder()
-	local name = UnitName("player")
-	mb_classOrder = {}
-	table.insert(mb_classOrder, name)
-	local members = mb_GetNumPartyOrRaidMembers()
-	for i = 1, members do
-		local unit = mb_GetUnitFromPartyOrRaidIndex(i)
-		if mb_GetClass(unit) == mb_GetClass("player") and UnitIsConnected(unit) then
-			name = UnitName(unit)
-			table.insert(mb_classOrder, name)
-		end
-	end
-	table.sort(mb_classOrder)
-	local count = 1
-	for i, v in pairs(mb_classOrder) do
-		if v == UnitName("player") then
-			mb_myClassOrderIndex = i
-			return
-		end
-	end
+    local name = UnitName("player")
+    mb_classOrder = {}
+    table.insert(mb_classOrder, name)
+    local members = mb_GetNumPartyOrRaidMembers()
+    for i = 1, members do
+        local unit = mb_GetUnitFromPartyOrRaidIndex(i)
+        if mb_GetClass(unit) == mb_GetClass("player") and UnitIsConnected(unit) then
+            name = UnitName(unit)
+            table.insert(mb_classOrder, name)
+        end
+    end
+    table.sort(mb_classOrder)
+    local count = 1
+    for i, v in pairs(mb_classOrder) do
+        if v == UnitName("player") then
+            mb_myClassOrderIndex = i
+            return
+        end
+    end
 end
 
 
@@ -400,6 +402,10 @@ function mb_OnUpdate()
         return
     end
 
+    if IsMounted() then
+        return
+    end
+
     mb_classSpecificRunFunction()
 
     if not mb_isCommanding then
@@ -525,20 +531,20 @@ function mb_HandleCommand(msg)
         return true
     end
 
-	matches, remainingString = mb_StringStartsWith(msg, "lc")
-	if matches then
-		mb_SayRaid("----------------------------------")
-		mb_SayRaid("Loot Council started for: " .. remainingString)
-		mb_SendMessage("lc ", remainingString)
-		return true
-	end
+    matches, remainingString = mb_StringStartsWith(msg, "lc")
+    if matches then
+        mb_SayRaid("----------------------------------")
+        mb_SayRaid("Loot Council started for: " .. remainingString)
+        mb_SendMessage("lc ", remainingString)
+        return true
+    end
 
-	matches, remainingString = mb_StringStartsWith(msg, "bm")
-	if matches then
-		mb_BossModule_LoadModule(remainingString)
-		mb_SendMessage("remoteExecute ", "mb_BossModule_LoadModule(\"" .. remainingString .. "\")")
-		return true
-	end
+    matches, remainingString = mb_StringStartsWith(msg, "bm")
+    if matches then
+        mb_BossModule_LoadModule(remainingString)
+        mb_SendMessage("remoteExecute ", "mb_BossModule_LoadModule(\"" .. remainingString .. "\")")
+        return true
+    end
 
     matches, remainingString = mb_StringStartsWith(msg, "InitAsCommander")
     if matches then
@@ -592,7 +598,7 @@ function mb_HandleCommand(msg)
 end
 
 function mb_SendMessage(messageType, message)
-	SendAddonMessage("MB", messageType .. " " .. tostring(message), "RAID")
+    SendAddonMessage("MB", messageType .. " " .. tostring(message), "RAID")
 end
 
 function mb_SendExclusiveRequest(requestType, message)
@@ -605,31 +611,31 @@ end
 
 mb_registeredMessageHandlers = {}
 function mb_RegisterMessageHandler(messageType, handlerFunc)
-	mb_registeredMessageHandlers[messageType] = handlerFunc
+    mb_registeredMessageHandlers[messageType] = handlerFunc
 end
 
 function mb_ShouldHandleMessageFromSelf(messageType)
-	if string.sub(messageType, 1, 5) == "buff:" then
-		return true
-	end
-	if string.sub(messageType, 1, 2) == "lc" then
-		return true
-	end
-	return false
+    if string.sub(messageType, 1, 5) == "buff:" then
+        return true
+    end
+    if string.sub(messageType, 1, 2) == "lc" then
+        return true
+    end
+    return false
 end
 
 function mb_HandleIncomingMessage(mbCom)
-	local messageType = string.sub(mbCom.message, 1, string.find(mbCom.message, " ") - 1)
-	local message = string.sub(mbCom.message, string.find(mbCom.message, " ") + 1)
+    local messageType = string.sub(mbCom.message, 1, string.find(mbCom.message, " ") - 1)
+    local message = string.sub(mbCom.message, string.find(mbCom.message, " ") + 1)
 
-	if messageType == "acceptExclusiveRequest" then
-		local requestId = tonumber(message)
-		if mbCom.from == UnitName("player") then
-			table.insert(mb_queuedAcceptedRequests, mb_acceptedPendingExclusiveRequests[requestId])
-		end
-		mb_acceptedPendingExclusiveRequests[requestId] = nil
-		return
-	end
+    if messageType == "acceptExclusiveRequest" then
+        local requestId = tonumber(message)
+        if mbCom.from == UnitName("player") then
+            table.insert(mb_queuedAcceptedRequests, mb_acceptedPendingExclusiveRequests[requestId])
+        end
+        mb_acceptedPendingExclusiveRequests[requestId] = nil
+        return
+    end
 
     if messageType == "automatedInterrupt" then
         local guid = string.sub(message, 1, string.find(message, ":") - 1)
@@ -647,56 +653,56 @@ function mb_HandleIncomingMessage(mbCom)
         end
     end
 
-	if mbCom.from == UnitName("player") and not mb_ShouldHandleMessageFromSelf(messageType) then
-		return
-	end
+    if mbCom.from == UnitName("player") and not mb_ShouldHandleMessageFromSelf(messageType) then
+        return
+    end
 
-	if messageType == "exclusiveRequest" then
-		mb_HandleIncomingExclusiveRequest(message, mbCom.from)
-		return
-	end
+    if messageType == "exclusiveRequest" then
+        mb_HandleIncomingExclusiveRequest(message, mbCom.from)
+        return
+    end
 
-	if messageType == "enable" and mb_IsTrustedCharacter(mbCom.from) then
-		mb_isEnabled = true
-		mb_InitAsSlave()
-		return
-	end
+    if messageType == "enable" and mb_IsTrustedCharacter(mbCom.from) then
+        mb_isEnabled = true
+        mb_InitAsSlave()
+        return
+    end
 
-	if not mb_isEnabled then
-		return
-	end
+    if not mb_isEnabled then
+        return
+    end
 
-	if mb_registeredMessageHandlers[messageType] ~= nil then
-		mb_registeredMessageHandlers[messageType](message, mbCom.from)
-	end
+    if mb_registeredMessageHandlers[messageType] ~= nil then
+        mb_registeredMessageHandlers[messageType](message, mbCom.from)
+    end
 end
 
 mb_queuedAcceptedRequests = {}
 mb_executorAttempts = 0
 function mb_HandleQueuedAcceptedRequest()
-	local request = mb_queuedAcceptedRequests[1]
-	if request ~= nil then
-		if mb_registeredExclusiveRequestHandlers[request.type].executor(request.message, request.from) then
-			table.remove(mb_queuedAcceptedRequests, 1)
-			mb_executorAttempts = 0
-		else
-			mb_executorAttempts = mb_executorAttempts + 1
-			if mb_executorAttempts > 25 then
-				mb_executorAttempts = 0
-				mb_SayRaid("I'm stuck trying to fulfil a request of type: " .. request.type)
-				table.remove(mb_queuedAcceptedRequests, 1)
-			end
-		end
-		return true
-	end
-	return false
+    local request = mb_queuedAcceptedRequests[1]
+    if request ~= nil then
+        if mb_registeredExclusiveRequestHandlers[request.type].executor(request.message, request.from) then
+            table.remove(mb_queuedAcceptedRequests, 1)
+            mb_executorAttempts = 0
+        else
+            mb_executorAttempts = mb_executorAttempts + 1
+            if mb_executorAttempts > 25 then
+                mb_executorAttempts = 0
+                mb_SayRaid("I'm stuck trying to fulfil a request of type: " .. request.type)
+                table.remove(mb_queuedAcceptedRequests, 1)
+            end
+        end
+        return true
+    end
+    return false
 end
 
 mb_registeredExclusiveRequestHandlers = {}
 function mb_RegisterExclusiveRequestHandler(requestType, acceptorFunc, executorFunc)
-	mb_registeredExclusiveRequestHandlers[requestType] = {}
-	mb_registeredExclusiveRequestHandlers[requestType].acceptor = acceptorFunc
-	mb_registeredExclusiveRequestHandlers[requestType].executor = executorFunc
+    mb_registeredExclusiveRequestHandlers[requestType] = {}
+    mb_registeredExclusiveRequestHandlers[requestType].acceptor = acceptorFunc
+    mb_registeredExclusiveRequestHandlers[requestType].executor = executorFunc
 end
 
 mb_acceptedPendingExclusiveRequests = {}
@@ -719,7 +725,7 @@ end
 
 mb_desiredBuffs = {}
 function mb_RegisterDesiredBuff(buff)
-	table.insert(mb_desiredBuffs, buff)
+    table.insert(mb_desiredBuffs, buff)
 end
 
 mb_lastBuffRequest = GetTime()
@@ -736,17 +742,17 @@ function mb_RequestDesiredBuffsThrottled()
     for _, buff in pairs(mb_desiredBuffs) do
         local hasBuff = false
 
-		if buff.singleAuraName ~= nil and UnitAura("player", buff.singleAuraName) then
-			hasBuff = true
-		end
-		if buff.groupAuraName ~= nil and UnitAura("player", buff.groupAuraName) then
-			hasBuff = true
-		end
+        if buff.singleAuraName ~= nil and UnitAura("player", buff.singleAuraName) then
+            hasBuff = true
+        end
+        if buff.groupAuraName ~= nil and UnitAura("player", buff.groupAuraName) then
+            hasBuff = true
+        end
 
-		if not hasBuff then
-			mb_SendMessage(buff.requestType)
-		end
-	end
+        if not hasBuff then
+            mb_SendMessage(buff.requestType)
+        end
+    end
 end
 
 function mb_HandleFacingWrongWay()
@@ -760,65 +766,65 @@ function mb_HandleFacingWrongWay()
 end
 
 function mb_EnableIWTDistanceClosing(rangeCheckSpell)
-	mb_IWTDistanceClosingRangeCheckSpell = rangeCheckSpell
+    mb_IWTDistanceClosingRangeCheckSpell = rangeCheckSpell
 end
 
 mb_lastError = 0
 function mb_ErrorHandler(msg)
-	if mb_lastError + 10 > mb_time then
-		mb_originalErrorHandler(msg)
-		return
-	end
-	mb_lastError = mb_time
-	mb_SayRaid("I received lua-error: " .. msg .. ". Call stack:")
-	for w in string.gmatch(debugstack(2, 20, 20), "[^\n]+") do
-		mb_SayRaid(string.gsub(w, "Interface\\AddOns\\", ""))
-	end
-	mb_SayRaid("-------------------------------------")
-	mb_originalErrorHandler(msg)
+    if mb_lastError + 10 > mb_time then
+        mb_originalErrorHandler(msg)
+        return
+    end
+    mb_lastError = mb_time
+    mb_SayRaid("I received lua-error: " .. msg .. ". Call stack:")
+    for w in string.gmatch(debugstack(2, 20, 20), "[^\n]+") do
+        mb_SayRaid(string.gsub(w, "Interface\\AddOns\\", ""))
+    end
+    mb_SayRaid("-------------------------------------")
+    mb_originalErrorHandler(msg)
 end
 
 mb_fixRaidSetupName = nil
 mb_fixRaidSetupLastInvite = 0
 function mb_FixRaidSetup()
-	if mb_fixRaidSetupName == nil then
-		return
-	end
-	local currentMembers = mb_GetNumPartyOrRaidMembers()
-	if not UnitInRaid("player") and currentMembers > 0 then
-		ConvertToRaid()
-		return
-	end
+    if mb_fixRaidSetupName == nil then
+        return
+    end
+    local currentMembers = mb_GetNumPartyOrRaidMembers()
+    if not UnitInRaid("player") and currentMembers > 0 then
+        ConvertToRaid()
+        return
+    end
 
-	local setup = mb_config.raidLayout[mb_fixRaidSetupName]
-	local didInvite = false
-	if mb_fixRaidSetupLastInvite + 10 > mb_time then
-		return
-	end
-	for groupId, groupMembers in pairs(setup) do
-		for memberId, memberName in pairs(groupMembers) do
-			if mb_GetUnitForPlayerName(memberName) == nil then
-				mb_fixRaidSetupLastInvite = mb_time
-				InviteUnit(memberName)
-				didInvite = true
-			end
-		end
-	end
-	if didInvite then
-		return
-	end
+    local setup = mb_config.raidLayout[mb_fixRaidSetupName]
+    local didInvite = false
+    if mb_fixRaidSetupLastInvite + 10 > mb_time then
+        return
+    end
+    for groupId, groupMembers in pairs(setup) do
+        for memberId, memberName in pairs(groupMembers) do
+            if mb_GetUnitForPlayerName(memberName) == nil then
+                mb_fixRaidSetupLastInvite = mb_time
+                InviteUnit(memberName)
+                didInvite = true
+            end
+        end
+    end
+    if didInvite then
+        return
+    end
 
-	-- TODO add fixing of subgroups
-	--for raidIndex = 1, currentMembers do
-	--	local name, _, subgroup = GetRaidRosterInfo(raidIndex);
-	--	if not mb_TableContains(groupMembers, name) and subgroup ~= groupId then
-	--		SwapRaidSubgroup(raidIndex)
-	--	end
-	--end
+    -- TODO add fixing of subgroups
+    --for raidIndex = 1, currentMembers do
+    --	local name, _, subgroup = GetRaidRosterInfo(raidIndex);
+    --	if not mb_TableContains(groupMembers, name) and subgroup ~= groupId then
+    --		SwapRaidSubgroup(raidIndex)
+    --	end
+    --end
 
-	SetLootMethod("freeforall")
-	mb_Print("Finished fixing raid setup for " .. mb_fixRaidSetupName)
-	mb_fixRaidSetupName = nil
+    SetLootMethod("freeforall")
+    mb_Print("Finished fixing raid setup for " .. mb_fixRaidSetupName)
+    mb_fixRaidSetupName = nil
 end
 
 mb_lastHarvestCheck = 0
@@ -826,22 +832,22 @@ mb_isSkinner = false
 mb_isMiner = false
 mb_isHerbalist = false
 function mb_HarvestCreature()
-	if not mb_isMiner and not mb_isSkinner and not mb_isHerbalist then
-		return
-	end
-	if mb_lastHarvestCheck + 1 > mb_time then
-		return
-	end
-	mb_lastHarvestCheck = mb_time
-	if UnitExists("target") and UnitIsDead("target") then
-		if mb_isSkinner then
-			CastSpellByName("Skinning")
-		elseif mb_isMiner then
-			CastSpellByName("Mining")
-		elseif mb_isHerbalist then
-			CastSpellByName("Herbalism")
-		end
-	end
+    if not mb_isMiner and not mb_isSkinner and not mb_isHerbalist then
+        return
+    end
+    if mb_lastHarvestCheck + 1 > mb_time then
+        return
+    end
+    mb_lastHarvestCheck = mb_time
+    if UnitExists("target") and UnitIsDead("target") then
+        if mb_isSkinner then
+            CastSpellByName("Skinning")
+        elseif mb_isMiner then
+            CastSpellByName("Mining")
+        elseif mb_isHerbalist then
+            CastSpellByName("Herbalism")
+        end
+    end
 end
 
 mb_readyCheckClassSpecificFunction = nil
@@ -889,22 +895,22 @@ mb_shouldInterruptTarget = false
 mb_blacklistedInterruptGUIDs = {}
 mb_registeredInterruptSpells = nil
 function mb_RegisterInterruptSpell(spell)
-	if mb_registeredInterruptSpells == nil then
-		mb_registeredInterruptSpells = {}
-	end
-	table.insert(mb_registeredInterruptSpells, spell)
+    if mb_registeredInterruptSpells == nil then
+        mb_registeredInterruptSpells = {}
+    end
+    table.insert(mb_registeredInterruptSpells, spell)
 end
 
 function mb_CleanBlacklistedInterruptGUIDsList()
-	local deleteGUIDs = {}
-	for k, v in pairs(mb_blacklistedInterruptGUIDs) do
-		if v < mb_time then
-			table.insert(deleteGUIDs, k)
-		end
-	end
-	for _, v in pairs(deleteGUIDs) do
-		mb_blacklistedInterruptGUIDs[v] = nil
-	end
+    local deleteGUIDs = {}
+    for k, v in pairs(mb_blacklistedInterruptGUIDs) do
+        if v < mb_time then
+            table.insert(deleteGUIDs, k)
+        end
+    end
+    for _, v in pairs(deleteGUIDs) do
+        mb_blacklistedInterruptGUIDs[v] = nil
+    end
 end
 
 function mb_HandleTargetSpellcast()
@@ -930,15 +936,15 @@ function mb_HandleTargetSpellcast()
         end
     end
 
-	local canInterrupt = false
-	for _, spell in pairs(mb_registeredInterruptSpells) do
-		if mb_IsUsableSpell(spell, "target") and mb_GetRemainingSpellCooldown(spell) < exclusiveInterruptTime then
-			canInterrupt = true
-		end
-	end
-	if not canInterrupt then
-		return
-	end
+    local canInterrupt = false
+    for _, spell in pairs(mb_registeredInterruptSpells) do
+        if mb_IsUsableSpell(spell, "target") and mb_GetRemainingSpellCooldown(spell) < exclusiveInterruptTime then
+            canInterrupt = true
+        end
+    end
+    if not canInterrupt then
+        return
+    end
 
     local guidShort = UnitGUID("target"):sub(13, 18)
     mb_SendMessage("automatedInterrupt", guidShort .. ":" .. tostring(exclusiveInterruptTime - 0.1)) -- Count on ~100ms ping, we'd rather want to the target un-blacklisted a little early than a little late
@@ -961,25 +967,25 @@ function mb_HandleInterruptTarget()
         return true
     end
 
-	local spell, _, _, _, _, endTime = UnitCastingInfo("target")
-	if spell == nil then
-		mb_SayRaid(tostring(UnitName("target")) .. " wasn't casting anything")
-		mb_shouldInterruptTarget = false
-		return false
-	end
+    local spell, _, _, _, _, endTime = UnitCastingInfo("target")
+    if spell == nil then
+        mb_SayRaid(tostring(UnitName("target")) .. " wasn't casting anything")
+        mb_shouldInterruptTarget = false
+        return false
+    end
 
-	if (endTime / 1000.0) - 0.5 > mb_time then
-		return true
-	end
+    if (endTime / 1000.0) - 0.5 > mb_time then
+        return true
+    end
 
-	for _, spell in pairs(mb_registeredInterruptSpells) do
-		mb_StopCast()
-		if mb_CastSpellOnTarget(spell) then
-			mb_shouldInterruptTarget = false
-			return true
-		end
-	end
-	return true
+    for _, spell in pairs(mb_registeredInterruptSpells) do
+        mb_StopCast()
+        if mb_CastSpellOnTarget(spell) then
+            mb_shouldInterruptTarget = false
+            return true
+        end
+    end
+    return true
 end
 
 mb_isRespecing = false

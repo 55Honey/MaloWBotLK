@@ -55,9 +55,9 @@ function mb_Hunter_Marksmanship_OnUpdate()
         return
     end
 
-    if not mb_isAutoAttacking then
-        InteractUnit("target")
-    end
+    --if not mb_isAutoAttacking then
+    --    InteractUnit("target")
+    --end
 
     if mb_GetMyThreatPercentage("target") > 85 then
         if mb_CastSpellWithoutTarget("Feign Death") then
