@@ -1,3 +1,5 @@
+-- This is a tanking module
+
 function mb_Deathknight_Blood_OnLoad()
     mb_RegisterExclusiveRequestHandler("taunt", mb_Deathknight_Blood_TauntAcceptor, mb_Deathknight_Blood_TauntExecutor)
     local nStance = GetShapeshiftForm()
@@ -9,6 +11,7 @@ function mb_Deathknight_Blood_OnLoad()
     if Hysteria > 0 then
        mb_HasHysteria = true
     end
+    mb_RegisterClassSpecificReadyCheckFunction(mb_Deathknight_Blood_ReadyCheck)
 end
 
 function mb_Deathknight_Blood_OnUpdate()
@@ -36,6 +39,7 @@ function mb_Deathknight_Blood_OnUpdate()
         if mb_FrostRuneCD() >= 1 or mb_DeathRuneCD() >= 1 then
             if mb_CastSpellOnTarget("Icy Touch") then
                 --mb_Print("IT")
+                mb_LastPestilenceTime = 0
                 return
             end
         end
@@ -45,12 +49,13 @@ function mb_Deathknight_Blood_OnUpdate()
         if mb_UnholyRuneCD() >= 1 or mb_DeathRuneCD() >= 1 then
             if mb_CastSpellOnTarget("Plague Strike") then
                 --mb_Print("PS")
+                mb_LastPestilenceTime = 0
                 return
             end
         end
     end
 
-    if mb_GetMyDebuffTimeRemaining("target", "Frost Fever") > 0 and mb_GetMyDebuffTimeRemaining("target", "Blood Plague") > 0 then
+    if mb_GetMyDebuffTimeRemaining("target", "Frost Fever") > 0 and mb_GetMyDebuffTimeRemaining("target", "Blood Plague") > 0 then -- do one Pestilence when combat starts if cleaveMode isn't single
         --mb_Print("mb_ LastPestilenceTime= ".. mb_LastPestilenceTime)
         --mb_Print("mb_Time= ".. mb_time)
         if mb_LastPestilenceTime + 20 < mb_time and mb_cleaveMode > 0 and mb_CastSpellOnTarget("Pestilence") then
@@ -60,7 +65,7 @@ function mb_Deathknight_Blood_OnUpdate()
         end
     end
 
-    if mb_GetMyDebuffTimeRemaining("target", "Frost Fever") < 3 or mb_GetMyDebuffTimeRemaining("target", "Blood Plague") < 3 then
+    if mb_GetMyDebuffTimeRemaining("target", "Frost Fever") < 3 or mb_GetMyDebuffTimeRemaining("target", "Blood Plague") < 3 then -- do a pestilence if dot timers are < 3 seconds
         if mb_GetMyDebuffTimeRemaining("target", "Frost Fever") > 0 and mb_GetMyDebuffTimeRemaining("target", "Blood Plague") > 0 then
             if mb_CastSpellOnTarget("Pestilence") then
                 --mb_Print("Pestilence2")
@@ -87,14 +92,14 @@ function mb_Deathknight_Blood_OnUpdate()
 
     if mb_cleaveMode > 0 then -- Use Blood runes for Cleave and AoE mode
         if mb_BloodRuneCD() >= 1 and mb_CastSpellOnTarget("Blood Boil") and mb_IsSpellInRange("Plague Strike") then
-            --mb_Print("Blood Boil")
+            --mb_Print("Blood Boil1")
             return
         end
     end
 
     if mb_cleaveMode > 1 then -- Use Death runes for AoE mode only
         if mb_DeathRuneCD() >= 1 and mb_CastSpellOnTarget("Blood Boil") and mb_IsSpellInRange("Plague Strike") then
-            --mb_Print("Blood Boil")
+            --mb_Print("Blood Boil2")
             return
         end
     end
@@ -159,4 +164,13 @@ function mb_Deathknight_Blood_TauntExecutor(message, from)
         end
     end
     return false
+end
+
+function mb_Deathknight_Blood_ReadyCheck()
+    local ready = true
+    if mb_GetBuffTimeRemaining("player", "Horn of Winter") < 60 then
+        CancelUnitBuff("player", "Horn of Winter")
+        ready = false
+    end
+    return ready
 end

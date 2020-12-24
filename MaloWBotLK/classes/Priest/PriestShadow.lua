@@ -21,6 +21,7 @@ mb_Priest_lastVampiricTouchTime = 0
 function mb_Priest_Shadow_OnLoad()
     mb_RegisterExclusiveRequestHandler("PrayerOfMending", mb_PriestPomAcceptor, mb_PriestPomExecutor)
     mb_Priest_Shadow_lastHealCommand = 0
+    mb_RegisterClassSpecificReadyCheckFunction(mb_Priest_Shadow_ReadyCheck)
 end
 
 function mb_Priest_Shadow_OnUpdate()
@@ -221,4 +222,17 @@ function mb_HandleWandUsage()
         end
     end
     return false
+end
+
+function mb_Priest_Shadow_ReadyCheck()
+    local ready = true
+    if mb_GetBuffTimeRemaining("player", "Inner Fire") < 540 then
+        CancelUnitBuff("player", "Inner Fire")
+        ready = false
+    end
+    if mb_GetBuffTimeRemaining("player", "Vampiric Embrace") < 540 then
+        CancelUnitBuff("player", "Vampiric Embrace")
+        ready = false
+    end
+    return ready
 end

@@ -1,8 +1,8 @@
 mb_config ={}
 
 mb_config.tanks = {"Fahrif", "Naina", "Honey", "Zakki"} -- Your tanks go here. Less than 4 is fine.
-mb_config.mainTank = "Fahrif" -- old maintank definition. Required for very old class modules.
-mb_config.offTank = "Naina" -- old offtank definition. Required for very old class modules.
+mb_config.mainTank = "Fahrif" -- old maintank definition. Required for the shadow priest class module.
+mb_config.offTank = "Naina" -- old offtank definition. Required for the shadow priest class module.
 
 mb_config.HysteriaTarget = "Zakki"
 -- Your Blood DKs will try cast Hysteria on this target one after another
