@@ -132,14 +132,14 @@ function mb_Warlock_Affliction_OnUpdate()
 
     if mb_UnitHealthPercentage("target") < 35 and UnitHealth("target") > 150000 and not mb_Warlock_TotTWithExecuteCorruption then
         if mb_FirstTryExecuteCorruption == 0 then
-            mb_FirstTryExecuteCorruption= mb_time
+            mb_FirstTryExecuteCorruption = mb_time
         end
-        if mb_GetBuffTimeRemaining("player", "Tricks of the Trade") and mb_CastSpellOnTarget("Corruption") then
+        if mb_GetBuffTimeRemaining("player", "Tricks of the Trade") > 0 and mb_CastSpellOnTarget("Corruption") then -- If Tricks of the Trade is up, cast Execute Corruption
             mb_Warlock_executeCorruption = true
             mb_Warlock_TotTWithExecuteCorruption = true
             return
         end
-        if not mb_Warlock_executeCorruption and mb_FirstTryExecuteCorruption + 5 < mb_time and mb_CastSpellOnTarget("Corruption") then
+        if not mb_Warlock_executeCorruption and mb_FirstTryExecuteCorruption + 5 < mb_time and mb_CastSpellOnTarget("Corruption") then -- If Tricks of the Trade is not up after 5 seconds of being below 35%, cast Execute Corruption anyway
             mb_Warlock_executeCorruption = true
         end
     end
@@ -150,5 +150,7 @@ function mb_Warlock_Affliction_OnUpdate()
         end
     end
 
-    CastSpellByName("Shadow Bolt")
+    if mb_CastSpellOnTarget("Shadow Bolt") then
+        return
+    end
 end

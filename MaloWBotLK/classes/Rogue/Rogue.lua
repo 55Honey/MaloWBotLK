@@ -19,6 +19,7 @@ function mb_Rogue_OnLoad()
         mb_SpecNotSupported("Assassination Rogues are not yet supported")
     elseif mb_GetMySpecName() == "Combat" then
         mb_classSpecificRunFunction = mb_Rogue_Combat_OnUpdate
+        mb_Rogue_Combat_OnLoad()
     else
         mb_classSpecificRunFunction = mb_Rogue_Subtlety_OnUpdate
         mb_SpecNotSupported("Subtlety Rogues are not yet supported")

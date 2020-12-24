@@ -5,6 +5,7 @@ function mb_Shaman_Restoration_OnLoad()
     mb_Shaman_SetFireTotem("Flametongue Totem")
     mb_Shaman_SetWaterTotem("Healing Stream Totem")
     mb_Shaman_SetAirTotem("Wrath of Air Totem")
+    mb_RegisterClassSpecificReadyCheckFunction(mb_Shaman_Restoration_ReadyCheck)
 end
 
 function mb_Shaman_Restoration_OnUpdate()
@@ -135,4 +136,20 @@ function mb_Shaman_Restoration_PreCastFinishCallback(spell, unit)
     if healAmount * 1.1 > spellTargetUnitMissingHealth then
         mb_StopCast()
     end
+end
+
+function mb_Shaman_Restoration_ReadyCheck()
+    local ready = true
+    if mb_GetBuffTimeRemaining("player", "Water Shield") < 540 then
+        CancelUnitBuff("player", "Water Shield")
+        ready = false
+    end
+    local _, mainHandExpiration, _, _, _ = GetWeaponEnchantInfo()
+    if mainHandExpiration ~= nil then
+        if mainHandExpiration / 1000 < 540 then
+            CancelItemTempEnchantment(1)
+            ready = false
+        end
+    end
+    return ready
 end
