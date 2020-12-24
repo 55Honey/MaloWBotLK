@@ -8,7 +8,6 @@ function mb_Deathknight_Unholy_OnLoad()
     if nStance ~= 1 then
         mb_SayRaid("Unholy DPS Rotation requires Blood Presence to be effective.")
     end
-    mb_RegisterClassSpecificReadyCheckFunction(mb_Deathknight_Unholy_ReadyCheck)
     mb_LastPestilenceTime = 0
 end
 
@@ -21,7 +20,7 @@ function mb_Deathknight_Unholy_OnUpdate()
         return
     end
 
-    if not IsMounted() and not UnitAffectingCombat("player") and mb_CastSpellWithoutTarget("Horn of Winter") then	 -- keep buff up, use on CD. High Prio out of combat. Low prio in combat at the end of the rotation.
+    if not IsMounted() and not UnitAffectingCombat("player") and mb_CastSpellWithoutTarget("Horn of Winter") then	 -- keep buff up, use on CD. High Prio out of combat. Low prio out of combat at the end of the rotation.
         --mb_Print("HoW")
         return
     end
@@ -44,7 +43,7 @@ function mb_Deathknight_Unholy_OnUpdate()
         return
     end
 
-    if UnitExists("playerpet") and mb_Warlock_petAttack and IsPetAttackActive() == false then -- mb_Warlock_petAttack is used as a global variable for all pets of all classes
+    if UnitExists("playerpet") and mb_Warlock_petAttack and IsPetAttackActive() == false then
         PetAttack()
     end
 
@@ -146,18 +145,5 @@ function mb_Deathknight_Unholy_OnUpdate()
         return
     end
 
-end
-
-function mb_Deathknight_Unholy_ReadyCheck()
-    local ready = true
-    if mb_GetBuffTimeRemaining("player", "Horn of Winter") < 60 then
-        CancelUnitBuff("player", "Horn of Winter")
-        ready = false
-    end
-    if mb_GetBuffTimeRemaining("player", "Bone Shield") < 240 then
-        CancelUnitBuff("player", "Bone Shield")
-        ready = false
-    end
-    return ready
 end
 

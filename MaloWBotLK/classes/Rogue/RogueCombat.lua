@@ -2,10 +2,6 @@
 -- Every man for Himself on CC
 -- Tricks of the Trade with requests
 
-function mb_Rogue_Combat_OnLoad()
-    mb_RegisterClassSpecificReadyCheckFunction(mb_Rogue_Combat_ReadyCheck)
-end
-
 function mb_Rogue_Combat_OnUpdate()
     if not mb_IsReadyForNewCast() then
         return
@@ -124,18 +120,4 @@ function mb_Rogue_Combat_OnUpdate()
     if mb_CastSpellOnTarget("Eviscerate") then
         -- mb_SayRaid("Casting " .. tostring(mb_GetComboPoints()) .. "p Eviscerate")
     end
-end
-
-function mb_Rogue_Combat_ReadyCheck()
-    local ready = true
-    local _, mainHandExpiration, _, _, offHandExpiration = GetWeaponEnchantInfo()
-    if mainHandExpiration / 1000 < 540 then
-        CancelItemTempEnchantment(1)
-        ready = false
-    end
-    if offHandExpiration / 1000 < 540 then
-        CancelItemTempEnchantment(2)
-        ready = false
-    end
-    return ready
 end

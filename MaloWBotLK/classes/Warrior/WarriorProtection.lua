@@ -9,7 +9,6 @@ function mb_Warrior_Protection_OnLoad()
     mb_CombatLogModule_Enable()
     mb_RegisterExclusiveRequestHandler("taunt", mb_Warrior_Protection_TauntAcceptor, mb_Warrior_Protection_TauntExecutor)
     mb_RegisterInterruptSpell("Shield Bash")
-    mb_RegisterClassSpecificReadyCheckFunction(mb_Warrior_Protection_ReadyCheck)
 end
 
 function mb_Warrior_Protection_OnUpdate()
@@ -22,7 +21,7 @@ function mb_Warrior_Protection_OnUpdate()
         return
     end
 
-    if mb_Warrior_CommandingShout() then -- checks for improved shout talent
+    if mb_myClassOrderIndex == 1 and mb_Warrior_CommandingShout() then -- only the first warrior in alphabetical order should cast this
         return
     end
 
@@ -121,13 +120,4 @@ function mb_Warrior_Protection_TauntExecutor(message, from)
         end
     end
     return false
-end
-
-function mb_Warrior_Protection_ReadyCheck()
-    local ready = true
-    if mb_GetBuffTimeRemaining("player", "Commanding Shout") < 60 then
-        CancelUnitBuff("player", "Commanding Shout")
-        ready = false
-    end
-    return ready
 end

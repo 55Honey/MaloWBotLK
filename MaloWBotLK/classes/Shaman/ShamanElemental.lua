@@ -4,7 +4,6 @@ function mb_Shaman_Elemental_OnLoad()
 	mb_Shaman_SetFireTotem("Totem of Wrath")
 	mb_Shaman_SetWaterTotem("Healing Stream Totem")
 	mb_Shaman_SetAirTotem("Wrath of Air Totem")
-	mb_RegisterClassSpecificReadyCheckFunction(mb_Shaman_Elemental_ReadyCheck)
 end
 
 mb_LastFireElementalTotem = 0
@@ -46,7 +45,7 @@ function mb_Shaman_Elemental_OnUpdate()
 		return
 	end
 
-	if mb_UnitPowerPercentage("player") < 90 then
+	if mb_UnitPowerPercentage("player") < 60 then
 		if mb_CastSpellWithoutTarget("Thunderstorm") then
 			return
 		end
@@ -115,20 +114,4 @@ function mb_Shaman_Elemental_HandleLightning()
 	end
 
 	return false
-end
-
-function mb_Shaman_Elemental_ReadyCheck()
-	local ready = true
-	if mb_GetBuffTimeRemaining("player", "Water Shield") < 540 then
-		CancelUnitBuff("player", "Water Shield")
-		ready = false
-	end
-	local _, mainHandExpiration, _, _, _ = GetWeaponEnchantInfo()
-	if mainHandExpiration ~= nil then
-		if mainHandExpiration / 1000 < 540 then
-			CancelItemTempEnchantment(1)
-			ready = false
-		end
-	end
-	return ready
 end

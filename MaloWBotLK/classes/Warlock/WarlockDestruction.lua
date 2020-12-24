@@ -51,6 +51,11 @@ function mb_Warlock_Destruction_OnUpdate()
         PetAttack()
     end
 
+    if mb_UnitPowerPercentage("player") < 50  and mb_UnitHealthPercentage("player") > 60 then
+        CastSpellByName("Life Tap")
+        return
+    end
+
     if mb_UnitPowerPercentage("player") < 50 and mb_UnitHealthPercentage("player") > 60 then
         CastSpellByName("Life Tap")
         return
@@ -58,12 +63,13 @@ function mb_Warlock_Destruction_OnUpdate()
 
     if mb_ShouldUseDpsCooldowns("Shadow Bolt") and UnitAffectingCombat("player") then
         mb_UseItemCooldowns()
-        if UnitHealth("target") > 350000 and mb_CastSpellOnTarget("Curse of Doom") then
+
+        if mb_CastSpellOnTarget("Curse of Doom") then
             return
         end
     end
 
-    if mb_cleaveMode > 1 then     -- if cleave mode is "aoe" do full aoe damage instead of the whole rotation
+    if mb_cleaveMode > 0 then
         local range = CheckInteractDistance("target", 2)
         if range then
             if mb_CastSpellWithoutTarget("Shadowflame") then
@@ -73,13 +79,6 @@ function mb_Warlock_Destruction_OnUpdate()
 
         if mb_GetMyDebuffTimeRemaining("target", "Seed of Corruption") == 0 and mb_CastSpellOnTarget("Seed of Corruption") then
             return
-        end
-
-        if mb_GetMyDebuffTimeRemaining("target", "Seed of Corruption") ~= 0 then
-            TargetNearestEnemy()
-            if UnitAffectingCombat("target") and mb_CastSpellOnTarget("Seed of Corruption") then
-                return
-            end
         end
     end
 
@@ -104,19 +103,6 @@ function mb_Warlock_Destruction_OnUpdate()
 
     end
 
-    if mb_cleaveMode > 0 then   -- if cleave mode is "cleave" do some ae damage instead of incinerate
-        local range = CheckInteractDistance("target", 2)
-        if range then
-            if mb_CastSpellWithoutTarget("Shadowflame") then
-                return
-            end
-        end
-
-        if mb_GetMyDebuffTimeRemaining("target", "Seed of Corruption") == 0 and mb_CastSpellOnTarget("Seed of Corruption") then
-            return
-        end
-    end
-
     if mb_CastSpellOnTarget("Incinerate") then
         return
     end
@@ -135,10 +121,8 @@ function mb_Warlock_HandleImpAutoCasts(spell1, spell2, spell3, spell4)
     if autostate2 == nil then
         TogglePetAutocast(5) -- Toggle Blood Pact ON
     end
-    if autostate3 == nil then
-        if mb_config.ImpInactive == nil or (mb_config.ImpInactive ~= nil and mb_config.ImpInactive ~= UnitName("player")) then
-            TogglePetAutocast(6) -- Toggle Firebolt ON
-        end
+    if autostate3 == nil and mb_config.ImpInactive == nil or mb_config.ImpInactive ~= UnitName("player") and mb_config.ImpInactive ~= nil then
+        TogglePetAutocast(6) -- Toggle Firebolt ON
     end
     if autostate4 == nil then
         TogglePetAutocast(7) -- Toggle Phase Shift ON

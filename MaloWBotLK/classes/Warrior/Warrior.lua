@@ -23,29 +23,26 @@ end
 
 mb_Warrior_lastCommandingShoutRaidCheck = 0
 function mb_Warrior_CommandingShout()
-	local _, _, _, _, improvedShouts = GetTalentInfo(2, 2)
-	if improvedShouts > 0 then
-		if not UnitBuff("player", "Commanding Shout") then
+	if not UnitBuff("player", "Commanding Shout") then
+		if UnitPower("player") < 10 then
+			return mb_CastSpellWithoutTarget("Bloodrage")
+		end
+		mb_CastSpellWithoutTarget("Commanding Shout")
+        return true
+	end
+	if mb_Warrior_lastCommandingShoutRaidCheck + 10 > mb_time then
+		return false
+	end
+	mb_Warrior_lastCommandingShoutRaidCheck = mb_time
+	local members = mb_GetNumPartyOrRaidMembers()
+	for i = 1, members do
+		local unit = mb_GetUnitFromPartyOrRaidIndex(i)
+		if not UnitBuff(unit, "Commanding Shout") and CheckInteractDistance(unit, 4) then
 			if UnitPower("player") < 10 then
 				return mb_CastSpellWithoutTarget("Bloodrage")
 			end
 			mb_CastSpellWithoutTarget("Commanding Shout")
-			return true
-		end
-		if mb_Warrior_lastCommandingShoutRaidCheck + 10 > mb_time then
-			return false
-		end
-		mb_Warrior_lastCommandingShoutRaidCheck = mb_time
-		local members = mb_GetNumPartyOrRaidMembers()
-		for i = 1, members do
-			local unit = mb_GetUnitFromPartyOrRaidIndex(i)
-			if not UnitBuff(unit, "Commanding Shout") and CheckInteractDistance(unit, 4) then
-				if UnitPower("player") < 10 then
-					return mb_CastSpellWithoutTarget("Bloodrage")
-				end
-				mb_CastSpellWithoutTarget("Commanding Shout")
-				return true
-			end
+            return true
 		end
 	end
 	return false
