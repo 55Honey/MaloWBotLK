@@ -73,11 +73,13 @@ function mb_Shaman_Restoration_OnUpdate()
         CastSpellByName("Mana Tide Totem")
             return
     end
-
+   
     for mb_PartyMember=1,4 do
         if mb_UnitPowerPercentage("party".. mb_PartyMember) < 50 and UnitAffectingCombat("party".. mb_PartyMember) then
-            CastSpellByName("Mana Tide Totem")
-            return
+            if mb_CanCastSpell("Mana Tide Totem") then
+                CastSpellByName("Mana Tide Totem")
+                return
+            end
         end
     end
 
